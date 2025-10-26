@@ -1,0 +1,93 @@
+body {
+  font-family: 'Cairo', sans-serif;
+ background: linear-gradient(to right, #0d6efde6, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  direction: rtl;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: -20px 4px 1px 7px rgba(0, 0, 0, 0.2);
+  width: 300px;
+}
+
+h2 {
+  text-align: center;
+  color: #0d6efde6;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin: 10px 0 8px;
+  font-weight: bold;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+      margin-bottom: 25px;
+}
+
+button {
+  padding: 10px;
+  background-color: #0083b0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+button:hover {
+  background-color: #00b4db;
+}
+
+p {
+  text-align: center;
+  margin-top: 15px;
+}
+
+p a{
+    text-decoration: none;
+    font-size: 1.2em;
+    color:  #0d6efde6
+}
+
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-container input {
+ width: 93%;
+    padding-right: 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.toggle-icon {
+  position: absolute;
+ top: 28%;
+  left: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  font-size: 18px;
+  color: #555;
+}
+
+.toggle-icon:hover {
+  color: #000;
+}
