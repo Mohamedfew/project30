@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>إدارة الموارد البشرية</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Cairo',sans-serif;
+background:#f4f6fb;
+direction:rtl;
+}
+
+/* HERO */
+
+.hero{
+height:70vh;
+background-image:url("https://images.unsplash.com/photo-1552664730-d307ca884978");
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+text-align:center;
+position:relative;
+}
+
+.hero::after{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.55);
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+animation:fadeHero 1.5s;
+}
+
+.hero h1{
+font-size:45px;
+margin-bottom:10px;
+}
+
+.hero p{
+font-size:20px;
+}
+
+/* container */
+
+.container{
+width:85%;
+margin:auto;
+padding:60px 0;
+}
+
+/* intro */
+
+.intro{
+text-align:center;
+margin-bottom:60px;
+opacity:0;
+transform:translateY(40px);
+transition:1s;
+}
+
+.intro.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* image section */
+
+.info-section{
+display:flex;
+gap:40px;
+flex-wrap:wrap;
+align-items:center;
+margin-bottom:70px;
+}
+
+.info-section img{
+width:45%;
+border-radius:10px;
+}
+
+.info-text{
+flex:1;
+opacity:0;
+transform:translateX(-50px);
+transition:1s;
+}
+
+.info-text.show{
+opacity:1;
+transform:translateX(0);
+}
+
+/* services */
+
+.services{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.service{
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+text-align:center;
+opacity:0;
+transform:scale(0.8);
+transition:0.8s;
+}
+
+.service.show{
+opacity:1;
+transform:scale(1);
+}
+
+.service:hover{
+transform:translateY(-10px);
+}
+
+.service h3{
+color:#ca2a06;
+margin-bottom:10px;
+}
+
+/* animation */
+
+@keyframes fadeHero{
+from{
+opacity:0;
+transform:translateY(-40px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+
+<div class="hero">
+
+<div class="hero-content">
+
+<h1>إدارة الموارد البشرية</h1>
+
+<p>
+تطوير الكوادر البشرية وتنظيم شؤون العاملين داخل المعهد
+</p>
+
+</div>
+
+</div>
+
+<div class="container">
+<style>
+
+/* container */
+
+.hr-container{
+width:85%;
+margin:auto;
+padding:80px 0;
+font-family:'Cairo',sans-serif;
+direction:rtl;
+}
+
+/* about */
+
+.hr-about{
+display:flex;
+align-items:center;
+gap:50px;
+flex-wrap:wrap;
+margin-bottom:100px;
+}
+
+.hr-about img{
+width:420px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+.hr-text{
+flex:1;
+opacity:0;
+transform:translateX(80px);
+transition:1s;
+}
+
+.hr-text.show{
+opacity:1;
+transform:translateX(0);
+}
+
+.hr-text h2{
+color:#0f172a;
+margin-bottom:15px;
+}
+
+/* services */
+
+.hr-services{
+background:#f7f9fc;
+padding:60px 40px;
+border-radius:15px;
+margin-bottom:100px;
+}
+
+.hr-title{
+text-align:center;
+margin-bottom:50px;
+}
+
+.hr-cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.hr-card{
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+text-align:center;
+opacity:0;
+transform:scale(0.8);
+transition:0.8s;
+}
+
+.hr-card.show{
+opacity:1;
+transform:scale(1);
+}
+
+.hr-card:hover{
+transform:translateY(-10px);
+}
+
+.hr-card h3{
+color:#0f172a;
+margin-bottom:10px;
+}
+
+/* stats */
+
+.hr-stats{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:20px;
+}
+
+.stat-box{
+flex:1;
+min-width:200px;
+background:#0f172a;
+color:white;
+padding:40px;
+text-align:center;
+border-radius:10px;
+opacity:0;
+transform:translateY(50px);
+transition:1s;
+}
+
+.stat-box.show{
+opacity:1;
+transform:translateY(0);
+}
+
+.stat-box h3{
+font-size:35px;
+margin-bottom:10px;
+}
+
+</style>
+
+
+<div class="hr-container">
+
+<!-- about -->
+
+<div class="hr-about">
+
+<img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d" class="reveal">
+
+<div class="hr-text reveal">
+
+<h2>عن إدارة الموارد البشرية</h2>
+
+<p>
+
+تعد إدارة الموارد البشرية من الإدارات الحيوية داخل المعهد،
+حيث تهتم بتنظيم شؤون العاملين وتطوير قدراتهم المهنية
+بما يحقق كفاءة الأداء المؤسسي.
+
+كما تعمل الإدارة على استقطاب الكفاءات المتميزة
+وتوفير برامج تدريبية تساعد على رفع مستوى
+الأداء وتحسين جودة العمل داخل المؤسسة.
+
+</p>
+
+</div>
+
+</div>
+
+
+<!-- services -->
+
+<div class="hr-services">
+
+<div class="hr-title">
+
+<h2>خدمات الإدارة</h2>
+
+</div>
+
+<div class="hr-cards">
+
+<div class="hr-card reveal">
+
+<h3>التوظيف</h3>
+
+<p>
+استقطاب الكفاءات المناسبة للعمل داخل المعهد.
+</p>
+
+</div>
+
+
+<div class="hr-card reveal">
+
+<h3>التدريب</h3>
+
+<p>
+تنظيم برامج تدريبية لتطوير مهارات الموظفين.
+</p>
+
+</div>
+
+
+<div class="hr-card reveal">
+
+<h3>إدارة الموظفين</h3>
+
+<p>
+متابعة ملفات العاملين والإجازات والترقيات.
+</p>
+
+</div>
+
+
+<div class="hr-card reveal">
+
+<h3>تقييم الأداء</h3>
+
+<p>
+تحليل الأداء الوظيفي وتحسين الإنتاجية.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- stats -->
+
+<div class="hr-stats">
+
+<div class="stat-box reveal">
+
+<h3>350+</h3>
+
+<p>موظف داخل المعهد</p>
+
+</div>
+
+<div class="stat-box reveal">
+
+<h3>25+</h3>
+
+<p>برنامج تدريبي سنوياً</p>
+
+</div>
+
+<div class="stat-box reveal">
+
+<h3>15+</h3>
+
+<p>قسم وإدارة مختلفة</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+let reveals=document.querySelectorAll(".reveal");
+
+window.addEventListener("scroll",function(){
+
+reveals.forEach(el=>{
+
+let top=el.getBoundingClientRect().top;
+
+if(top < window.innerHeight-100){
+
+el.classList.add("show");
+
+}
+
+});
+
+});
+
+</script>
+
+</body>
+</html>

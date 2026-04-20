@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>إدارة الشؤون القانونية</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Cairo',sans-serif;
+background:#f3f5f9;
+direction:rtl;
+}
+
+/* hero */
+
+.hero{
+height:70vh;
+background-image:url("https://images.unsplash.com/photo-1589829545856-d10d557cf95f");
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+text-align:center;
+position:relative;
+}
+
+.hero::after{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+animation:fadeIn 1.5s;
+}
+
+.hero h1{
+font-size:45px;
+margin-bottom:10px;
+}
+
+/* container */
+
+.container{
+width:85%;
+margin:auto;
+padding:60px 0;
+}
+
+/* quote */
+
+.quote{
+background:#0f172a;
+color:white;
+padding:40px;
+border-radius:10px;
+text-align:center;
+margin-bottom:60px;
+opacity:0;
+transform:translateY(40px);
+transition:1s;
+}
+
+.quote.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* tasks */
+
+.tasks{
+display:flex;
+gap:40px;
+flex-wrap:wrap;
+margin-bottom:60px;
+}
+
+.tasks ul{
+flex:1;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+list-style:none;
+opacity:0;
+filter:blur(5px);
+transition:1s;
+}
+
+.tasks ul.show{
+opacity:1;
+filter:blur(0);
+}
+
+.tasks li{
+margin-bottom:15px;
+padding-right:20px;
+position:relative;
+}
+
+.tasks li::before{
+content:"⚖";
+position:absolute;
+right:0;
+}
+
+/* cards */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.card{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+text-align:center;
+transform:scale(0.8);
+opacity:0;
+transition:0.8s;
+}
+
+.card.show{
+opacity:1;
+transform:scale(1);
+}
+
+.card:hover{
+transform:translateY(-8px);
+}
+
+.card h3{
+color:#0f172a;
+margin-bottom:10px;
+}
+
+/* animation */
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(-40px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+</style>
+</head>
+
+
+<body>
+
+<!-- hero -->
+
+<div class="hero">
+
+<div class="hero-content">
+
+<h1>إدارة الشؤون القانونية</h1>
+
+<p>
+الإشراف على الجوانب القانونية وضمان الالتزام باللوائح
+</p>
+
+</div>
+
+</div>
+
+
+<div class="container">
+
+<!-- quote -->
+
+<div class="quote reveal">
+
+<p>
+تلتزم إدارة الشؤون القانونية بتطبيق القوانين واللوائح
+المنظمة للعمل داخل المعهد بما يضمن تحقيق العدالة
+والحفاظ على الحقوق.
+</p>
+
+</div>
+
+
+<!-- tasks -->
+
+<div class="tasks">
+
+<ul class="reveal">
+
+<h3>اختصاصات الإدارة</h3>
+
+<li>مراجعة العقود والاتفاقيات الخاصة بالمعهد</li>
+<li>تقديم الاستشارات القانونية للإدارات المختلفة</li>
+<li>متابعة القضايا القانونية الخاصة بالمؤسسة</li>
+<li>تفسير اللوائح والقوانين المنظمة للعمل</li>
+
+</ul>
+
+
+<ul class="reveal">
+
+<h3>الخدمات القانونية</h3>
+
+<li>إعداد المذكرات القانونية</li>
+<li>متابعة التحقيقات الإدارية</li>
+<li>مراجعة القرارات الإدارية</li>
+<li>ضمان الالتزام بالقوانين المنظمة</li>
+
+</ul>
+
+</div>
+
+
+<!-- cards -->
+
+<div class="cards">
+
+<div class="card reveal">
+
+<h3>العدالة</h3>
+
+<p>
+الالتزام بمبادئ العدالة والنزاهة في جميع الإجراءات
+القانونية داخل المعهد.
+</p>
+
+</div>
+
+
+<div class="card reveal">
+
+<h3>الشفافية</h3>
+
+<p>
+ضمان وضوح الإجراءات القانونية وتطبيق القوانين
+بشكل عادل على الجميع.
+</p>
+
+</div>
+
+
+<div class="card reveal">
+
+<h3>حماية الحقوق</h3>
+
+<p>
+الحفاظ على حقوق المؤسسة والعاملين والطلاب
+وفق القوانين واللوائح المنظمة.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+let elements=document.querySelectorAll(".reveal");
+
+window.addEventListener("scroll",function(){
+
+elements.forEach(el=>{
+
+let top=el.getBoundingClientRect().top;
+
+if(top < window.innerHeight-100){
+
+el.classList.add("show");
+
+}
+
+});
+
+});
+
+</script>
+
+</body>
+</html>

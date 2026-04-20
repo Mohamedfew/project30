@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز أخبار المعهد العالي للهندسة</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --main-color: #004d99;
+            --accent-color: #f2d21e;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-light: #f8fafc;
+            
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            overflow-x: hidden;
+            font-size: 22px !important;
+        }
+
+        /* Hero Header */
+        .hero {
+            height: 60vh;
+            background: linear-gradient(to bottom, rgba(0,77,153,0.8), var(--bg-color)), 
+                        url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        /* News Container */
+        .container {
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        /* Section Styling */
+        .news-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        /* The 5 Main Elements (Cards) */
+        .item-card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(50px); /* البداية للأنميشن */
+        }
+
+        .item-card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hover Effect: Zoom & Glow */
+        .item-card:hover {
+            transform: scale(1.03) translateY(-10px);
+            box-shadow: 0 20px 40px rgba(242, 210, 30, 0.2);
+            z-index: 10;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .item-card:hover .card-image img {
+            transform: scale(1.15) rotate(-2deg);
+        }
+
+        .badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--accent-color);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 0.8rem;
+            z-index: 2;
+        }
+
+        .card-content {
+            padding: 25px;
+            background: linear-gradient(to top, var(--card-bg) 80%, transparent);
+        }
+
+        .card-content h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .card-content p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+        }
+        /* Interactive Details (Shown on Hover) */
+        .extra-info {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .item-card:hover .extra-info {
+            max-height: 150px;
+            margin-top: 15px;
+            padding-top: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: var(--accent-color);
+        }
+
+        /* Background Particle Effect (Simple) */
+        #bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(0,77,153,0.1) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+        }
+        
+    /* footer */
+
+.footer {
+   background:#0f172a ;
+  color: #fff;
+ height: 460px;
+  font-family: "Cairo", sans-serif;
+  padding: 20px;
+}
+
+/* layout */
+.footer .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.footer .col {
+  flex: 1 1 220px;
+}
+
+/* logo */
+.footer-logo img {
+  width: 120px;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.footer-logo img:hover {
+  transform: scale(1.05);
+}
+
+/* titles */
+.footer h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.footer h3::after {
+  content: "";
+  width: 40px;
+  height: 3px;
+  position: absolute;
+  bottom: -8px;
+  right: 0;
+  border-radius: 10px;
+}
+
+/* list */
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer ul li {
+  margin-bottom: 12px;
+}
+
+/* links */
+.footer a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: 0.3s;
+  display: inline-block;
+}
+
+.footer a:hover {
+  color: #dc3535d9;
+  transform: translateX(-5px);
+}
+
+/* contact */
+.contact li {
+  font-size: 20px;
+  color: #cbd5e1;
+}
+
+/* spacing bottom */
+
+/* responsive */
+@media (max-width: 768px) {
+  .footer .row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer h3::after {
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+    </style>
+</head>
+<body>
+
+    <div id="bg-glow"></div>
+    <header class="hero">
+        <span style="letter-spacing: 5px; text-transform: uppercase; font-weight: bold;">HIMIT NEWS FEED</span>
+        <h1>بوابة التميز والابتكار</h1>
+        <p>اكتشف آخر أخبار وفعاليات المعهد العالي للهندسة والتكنولوجيا</p>
+    </header>
+
+    <div class="container">
+        <div class="news-section">
+
+            <article class="item-card reveal">
+                <div class="badge">إنجاز عالمي</div>
+                <div class="card-image">
+                    <img src="/img/روبوت.gif" alt="Robotics">
+                </div>
+                <div class="card-content">
+                    <h3>فريق الروبوتات يحصد المركز الأول</h3>
+                    <p>نجح طلاب فريق المعهد في تصميم روبوت ذكي قادر على فرز النفايات الطبية ذاتياً، مما أهلهم للفوز بلقب المسابقة الدولية للابتكار.</p>
+                    <div class="extra-info">
+                        <div class="info-item"><i class="fa-solid fa-trophy"></i> الجائزة: الدرع الذهبي 2026</div>
+                        <div class="info-item"><i class="fa-solid fa-users"></i> المشرف: قسم هندسة الحاسبات</div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="item-card reveal">
+                <div class="badge">فعاليات قادمة</div>
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80" alt="Conference">
+                </div>
+                <div class="card-content">
+                    <h3>مؤتمر الهندسة المستدامة 4.0</h3>
+                    <p>نستضيف الشهر القادم نخبة من علماء العالم لمناقشة تطبيقات الذكاء الاصطناعي في العمارة الخضراء والطاقة المتجددة.</p>
+                    <div class="extra-info">
+                        <div class="info-item"><i class="fa-solid fa-calendar"></i> التاريخ: 15 أبريل 2026</div>
+                        <div class="info-item"><i class="fa-solid fa-location-dot"></i> المكان: القاعة الكبرى بالمعهد</div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="item-card reveal">
+                <div class="badge">مشاريع تخرج</div>
+                <div class="card-image">
+                    <img src="/img/148392-ناطحة-سحاب-طنطا.jpg" alt="Architecture">
+                </div>
+                <div class="card-content">
+                    <h3>تصميم "مدينة الغد" الذكية</h3>
+                    <p>مشروع تخرج استثنائي لطلاب قسم العمارة يقدم رؤية متكاملة لمدن ذكية تعتمد كلياً على إعادة تدوير المياه والطاقة الشمسية.</p>
+                    <div class="extra-info">
+                      <div class="info-item"><i class="fa-solid fa-lightbulb"></i> الفكرة: استدامة كاملة</div>
+                        <div class="info-item"><i class="fa-solid fa-map"></i> التخصص: الهندسة المعمارية</div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="item-card reveal">
+                <div class="badge">شراكات</div>
+                <div class="card-image">
+                    <img src="/img/شركات.jfif" alt="Partners">
+                </div>
+                <div class="card-content">
+                    <h3>اتفاقية تدريب مع "سيمينز" العالمية</h3>
+                    <p>تم توقيع بروتوكول تعاون يتيح لطلاب المعهد التدريب العملي في مصانع الشركة والتعرف على أحدث أنظمة التحكم الصناعي.</p>
+                    <div class="extra-info">
+                        <div class="info-item"><i class="fa-solid fa-handshake"></i> الميزة: شهادة دولية معتمدة</div>
+                        <div class="info-item"><i class="fa-solid fa-briefcase"></i> لطلاب: السنة الثالثة والرابعة</div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="item-card reveal">
+                <div class="badge">حياة طلابية</div>
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" alt="Student Life">
+                </div>
+                <div class="card-content">
+                    <h3>افتتاح المجمع الرياضي الجديد</h3>
+                    <p>احتفل المعهد بافتتاح أحدث مجمع رياضي يضم ملاعب تينس، كرة قدم، وصالة ألعاب بدنية مجهزة بأحدث الأجهزة لخدمة الطلاب.</p>
+                    <div class="extra-info">
+                        <div class="info-item"><i class="fa-solid fa-heart-pulse"></i> الهدف: صحة ولياقة الطلاب</div>
+                        <div class="info-item"><i class="fa-solid fa-clock"></i> المواعيد: من 8 ص إلى 8 م</div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </div>
+ <footer class="footer">
+
+  <div class="container">
+    <div class="row">
+
+      <!-- Departments -->
+      <div class="col">
+        <h3>الأقسام</h3>
+        <ul>
+          <li><a href="#">الإدارة والمحاسبة</a></li>
+          <li><a href="#">نظم المعلومات الإدارية</a></li>
+          <li><a href="#">علوم الحاسب</a></li>
+          <li><a href="#">العلوم الأساسية</a></li>
+        </ul>
+      </div>
+
+      <!-- Links -->
+      <div class="col">
+        <h3>روابط</h3>
+        <ul>
+          <li><a href="/home.html">الرئيسية</a></li>
+          <li><a href="/information.html">عن المعهد</a></li>
+          <li><a href="#">الوحدات</a></li>
+          <li><a href="/news.html">الأخبار</a></li>
+          <li><a href="#">إدارة المعهد</a></li>
+          <li><a href="#">اتصل بنا</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="col">
+        <h3>اتصل بنا</h3>
+        <ul class="contact">
+          <li>📞 0473278920</li>
+          <li>📧 info@himit-kfs.edu.eg</li>
+          <li>📍 كفر الشيخ - الصوالحة</li>
+        </ul>
+      </div>
+
+    </div>
+ 
+    </div>
+
+  </div>
+   <div class="bottom-footer">
+        <marquee style="width: 100%;text-align: left;">
+
+                        <p style="text-transform:none;">
+                            Copyright© 2026. designed by <a style="color:#f2d21e;">Programming and Development Team  </a>
+                        </p>
+                    
+        </marquee>
+
+</footer>
+
+    <script>
+        // دالة الأنميشن عند السكرول
+        function scrollReveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            reveals.forEach((card, index) => {
+                const windowHeight = window.innerHeight;
+                const elementTop = card.getBoundingClientRect().top;
+                const elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    // إضافة Delay بسيط لكل كارت بناءً على ترتيبه لإعطاء شكل الـ Wave
+                    setTimeout(() => {
+                        card.classList.add('active');
+                    }, 100); 
+                }
+            });
+        }
+
+        // تشغيل الدالة عند الحركة والتحميل
+        window.addEventListener('scroll', scrollReveal);
+        window.addEventListener('load', scrollReveal);
+
+        // حركة الـ Background Glow مع الماوس
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.getElementById('bg-glow');
+            const x = e.clientX;
+            const y = e.clientY;
+            glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0,77,153,0.2) 0%, transparent 70%)`;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرات</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background: linear-gradient(135deg, #020617, #0f172a); color: white; min-height: 100vh; overflow-x: hidden; }
+        .container { width: 85%; max-width: 1200px; margin: auto; padding-bottom: 50px; }
+
+        /* الهيدر: عنوان في المنتصف وزر على اليسار */
+        .header-area { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; margin-top: 60px; margin-bottom: 40px; }
+        .header-text { grid-column: 2; text-align: center; }
+        .header-text h1 { font-size: clamp(28px, 5vw, 45px); white-space: nowrap; }
+        .header-text p { font-size: 18px; color: #94a3b8; }
+        .nav-actions { grid-column: 3; display: flex; justify-content: flex-end; }
+
+        .btn-home {
+            background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 18px; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s;
+            display: flex; align-items: center; gap: 8px; font-size: 14px;
+        }
+        .btn-home:hover { background: #0ea5e9; border-color: #0ea5e9; transform: scale(1.05); }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+        .card {
+            background: rgba(255, 255, 255, .07); padding: 20px; border-radius: 15px; text-align: center;
+            cursor: pointer; transition: 0.3s; border: 1px solid rgba(255, 255, 255, .1); overflow: hidden;
+        }
+        .card:hover { transform: translateY(-8px); background: rgba(255, 255, 255, .1); }
+
+        .img-wrapper { width: 100%; height: 150px; border-radius: 10px; margin-bottom: 15px; background: #1e293b; overflow: hidden; }
+        .card img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.5s; }
+        .img-loaded { opacity: 1 !important; }
+
+        #years, #subjects { display: none; margin-top: 20px; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .subject {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, .05); padding: 15px 20px; border-radius: 12px;
+            margin-bottom: 12px; border-right: 4px solid #0ea5e9;
+        }
+
+        .buttons { display: flex; gap: 8px; }
+        .btn-action {
+            text-decoration: none; padding: 8px 16px; border-radius: 8px;
+            font-weight: bold; font-size: 14px; color: white; transition: 0.2s;
+        }
+        .view { background: #0ea5e9; }
+        .download { background: #22c55e; }
+        .view:hover { background: #0284c7; }
+        .download:hover { background: #16a34a; }
+
+        .back { margin-top: 30px; text-align: center; }
+        .back button { padding: 10px 25px; border: none; background: #334155; color: white; border-radius: 8px; cursor: pointer; }
+
+        @media (max-width: 600px) { .header-area { display: flex; flex-direction: column; gap: 15px; } .nav-actions { justify-content: center; } }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header-area">
+            <div></div> 
+            <div class="header-text">
+                <h1>المحاضرات</h1>
+                <p id="sub-title">اختر التخصص</p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-home">
+                  <a href="home.html" class="btn-home" style="text-decoration: none;">
+    <i class="fas fa-home"></i> الرئيسية
+</a>
+                </button>
+            </div>
+        </div>
+
+        <div id="majors" class="grid">
+            <div class="card" onclick="showYears('قسم هندسة')">
+                <div class="img-wrapper"><img src="/img/هندسة1111111111111111111111.jpg" onload="imgLoaded(this)"></div>
+                <h3><i class="fas fa-laptop-code"></i> قسم هندسة</h3>
+            </div>
+            <div class="card" onclick="showYears('قسم الإدارة والمحاسبة')">
+                <div class="img-wrapper"><img src="/img/تاني م.jfif" onload="imgLoaded(this)"></div>
+                <h3><i class="fas fa-calculator"></i> قسم الإدارة والمحاسبة</h3>
+            </div>
+            <div class="card" onclick="showYears('قسم نظم المعلومات الإدارية')">
+                <div class="img-wrapper"><img src="/img/تالت م.jfif" onload="imgLoaded(this)"></div>
+                <h3><i class="fas fa-network-wired"></i> قسم نظم المعلومات الإدارية</h3>
+            </div>
+            <div class="card" onclick="showYears('قسم علوم الحاسب')">
+                <div class="img-wrapper"><img src="/img/علوم الحاسب.jfif" onload="imgLoaded(this)"></div>
+                <h3><i class="fas fa-laptop-code"></i> قسم علوم الحاسب</h3>
+            </div>
+            <div class="card" onclick="showYears('قسم العلوم الأساسية')">
+                <div class="img-wrapper"><img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=400&auto=format&fit=crop" onload="imgLoaded(this)"></div>
+                <h3><i class="fas fa-flask"></i> قسم العلوم الأساسية</h3>
+            </div>
+        </div>
+
+        <div id="years">
+            <div class="title" style="text-align: center; margin-bottom: 30px;"><h2 id="majorName"></h2><p>اختر الفرقة</p></div>
+            <div class="grid">
+                <div class="card" onclick="showSubjects('الفرقة الأولى')"><h3>الفرقة الأولى</h3></div>
+                <div class="card" onclick="showSubjects('الفرقة الثانية')"><h3>الفرقة الثانية</h3></div>
+                <div class="card" onclick="showSubjects('الفرقة الثالثة')"><h3>الفرقة الثالثة</h3></div>
+                <div class="card" onclick="showSubjects('الفرقة الرابعة')"><h3>الفرقة الرابعة</h3></div>
+            </div>
+            <div class="back"><button onclick="backMajors()"><i class="fas fa-arrow-right"></i> رجوع للأقسام</button></div>
+        </div>
+
+        <div id="subjects">
+            <div class="title" style="text-align: center; margin-bottom: 30px;"><h2 id="yearName"></h2><p>المواد المتاحة</p></div>
+            <div id="subjectsList"></div>
+            <div class="back"><button onclick="backYears()"><i class="fas fa-arrow-right"></i> رجوع للفرق</button></div>
+        </div>
+    </div>
+
+    <script>
+        function imgLoaded(img) { img.classList.add('img-loaded'); }
+
+        // --- مكان وضع روابط الـ PDF ---
+        // استبدل كلمة "link_here.pdf" برابط الملف الحقيقي الخاص بكل مادة
+        const data = {
+            "قسم هندسة": {
+                "الفرقة الأولى": [
+                    { title: "رياضيات هندسية (1)", link: "/كتاب دراسي__ادارة الاعمال الالكترونية.pdf" },
+                    { title: "فيزياء عامة", link: "pdfs/physics1.pdf" },
+                    { title: "كيمياء هندسية", link: "pdfs/chem.pdf" },
+                    { title: "رسم هندسي", link: "pdfs/drawing.pdf" },
+                    { title: "ميكانيكا (استاتيكا)", link: "pdfs/static.pdf" }
+                ],
+                "الفرقة الثانية": [
+                    { title: "رياضيات هندسية (2)", link: "link_here.pdf" },
+                    { title: "ديناميكا", link: "link_here.pdf" },
+                    { title: "خواص مواد", link: "link_here.pdf" },
+                    { title: "هندسة كهربائية", link: "link_here.pdf" },
+                    { title: "تكنولوجيا الورش", link: "link_here.pdf" }
+                ],
+                "الفرقة الثالثة": [
+                    { title: "ميكانيكا الموائع", link: "link_here.pdf" },
+                    { title: "تحليل إنشاءات", link: "link_here.pdf" },
+                    { title: "هندسة مدنية", link: "link_here.pdf" },
+                    { title: "تصميم ميكانيكي", link: "link_here.pdf" },
+                    { title: "إلكترونيات القوى", link: "link_here.pdf" }
+                ],
+                "الفرقة الرابعة": [
+                    { title: "مشروع التخرج", link: "link_here.pdf" },
+                    { title: "إدارة مشروعات", link: "link_here.pdf" },
+                    { title: "نظم تحكم آلي", link: "link_here.pdf" },
+                    { title: "هندسة البيئة", link: "link_here.pdf" },
+                    { title: "طاقة متجددة", link: "link_here.pdf" }
+                ]
+            },
+            "قسم الإدارة والمحاسبة": {
+                "الفرقة الأولى": [
+                    { title: "مبادئ محاسبة (1)", link: "link_here.pdf" },
+                    { title: "مبادئ إدارة", link: "link_here.pdf" },
+                    { title: "اقتصاد جزئي", link: "link_here.pdf" },
+                    { title: "رياضيات الأعمال", link: "link_here.pdf" },
+                    { title: "قانون تجاري", link: "link_here.pdf" }
+                ],
+                "الفرقة الثانية": [
+                    { title: "محاسبة شركات", link: "link_here.pdf" },
+                    { title: "تسويق", link: "link_here.pdf" },
+                    { title: "سلوك تنظيمي", link: "link_here.pdf" },
+                    { title: "اقتصاد كلي", link: "link_here.pdf" },
+                    { title: "إحصاء تحليلي", link: "link_here.pdf" }
+                ],
+                "الفرقة الثالثة": [
+                    { title: "محاسبة تكاليف", link: "link_here.pdf" },
+                    { title: "إدارة مالية", link: "link_here.pdf" },
+                    { title: "إدارة موارد بشرية", link: "link_here.pdf" },
+                    { title: "منشآت مالية", link: "link_here.pdf" },
+                    { title: "بحوث عمليات", link: "link_here.pdf" }
+                ],
+                "الفرقة الرابعة": [
+                    { title: "محاسبة إدارية", link: "link_here.pdf" },
+                    { title: "إدارة استراتيجية", link: "link_here.pdf" },
+                    { title: "مراجعة وحسابات", link: "link_here.pdf" },
+                    { title: "دراسات جدوى", link: "link_here.pdf" },
+                    { title: "ريادة أعمال", link: "link_here.pdf" }
+                ]
+            },
+            "قسم نظم المعلومات الإدارية": {
+                "الفرقة الأولى": [
+                    { title: "أساسيات نظم معلومات", link: "link_here.pdf" },
+                    { title: "تكنولوجيا المعلومات", link: "link_here.pdf" },
+                    { title: "برمجة هيكلية", link: "link_here.pdf" },
+                    { title: "رياضيات حاسب", link: "link_here.pdf" },
+                    { title: "مبادئ تنظيم", link: "link_here.pdf" }
+                ],
+                "الفرقة الثانية": [
+                    { title: "تحليل نظم (1)", link: "link_here.pdf" },
+                    { title: "قواعد بيانات (1)", link: "link_here.pdf" },
+                    { title: "برمجة كائنية", link: "link_here.pdf" },
+                    { title: "شبكات حاسب", link: "link_here.pdf" },
+                    { title: "إدارة إلكترونية", link: "link_here.pdf" }
+                ],
+                "الفرقة الثالثة": [
+                    { title: "تحليل نظم (2)", link: "link_here.pdf" },
+                    { title: "قواعد بيانات (2)", link: "link_here.pdf" },
+                    { title: "نظم دعم القرار", link: "link_here.pdf" },
+                    { title: "برمجة ويب", link: "link_here.pdf" },
+                    { title: "أمن نظم معلومات", link: "link_here.pdf" }
+                ],
+                "الفرقة الرابعة": [
+                    { title: "مشروع تخرج نظم", link: "link_here.pdf" },
+                    { title: "ذكاء أعمال", link: "link_here.pdf" },
+                    { title: "تنقيب بيانات", link: "link_here.pdf" },
+                    { title: "إدارة مشاريع برمجية", link: "link_here.pdf" },
+                    { title: "تطبيقات موبايل", link: "link_here.pdf" }
+                ]
+            },
+            "قسم علوم الحاسب": {
+                "الفرقة الأولى": [
+                    { title: "برمجة حاسب (1)", link: "link_here.pdf" },
+                    { title: "رياضيات متقطعة", link: "link_here.pdf" },
+                    { title: "تصميم منطقي", link: "link_here.pdf" },
+                    { title: "مقدمة علوم حاسب", link: "link_here.pdf" },
+                    { title: "فيزياء إلكترونية", link: "link_here.pdf" }
+                ],
+                "الفرقة الثانية": [
+                    { title: "هياكل بيانات", link: "link_here.pdf" },
+                    { title: "برمجة (2)", link: "link_here.pdf" },
+                    { title: "تنظيم حاسبات", link: "link_here.pdf" },
+                    { title: "احتمالات وإحصاء", link: "link_here.pdf" },
+                    { title: "نظم تشغيل (1)", link: "link_here.pdf" }
+                ],
+                "الفرقة الثالثة": [
+                    { title: "خوارزميات", link: "link_here.pdf" },
+                    { title: "هندسة برمجيات", link: "link_here.pdf" },
+                    { title: "نظم تشغيل (2)", link: "link_here.pdf" },
+                    { title: "رسوم حاسب", link: "link_here.pdf" },
+                    { title: "الذكاء الاصطناعي", link: "link_here.pdf" }
+                ],
+                "الفرقة الرابعة": [
+                    { title: "تعلم آلي", link: "link_here.pdf" },
+                    { title: "أمن سيبراني", link: "link_here.pdf" },
+                    { title: "معالجة صور", link: "link_here.pdf" },
+                    { title: "حوسبة سحابية", link: "link_here.pdf" },
+                    { title: "مشروع تخرج", link: "link_here.pdf" }
+                ]
+            },
+            "قسم العلوم الأساسية": {
+                "الفرقة الأولى": [
+                    { title: "رياضيات (1)", link: "link_here.pdf" },
+                    { title: "فيزياء (1)", link: "link_here.pdf" },
+                    { title: "كيمياء عامة", link: "link_here.pdf" },
+                    { title: "لغة إنجليزية", link: "link_here.pdf" },
+                    { title: "حقوق إنسان", link: "link_here.pdf" }
+                ],
+                "الفرقة الثانية": [
+                    { title: "رياضيات (2)", link: "link_here.pdf" },
+                    { title: "فيزياء (2)", link: "link_here.pdf" },
+                    { title: "تفكير نقدي", link: "link_here.pdf" },
+                    { title: "إحصاء عام", link: "link_here.pdf" },
+                    { title: "تاريخ علوم", link: "link_here.pdf" }
+                ],
+                "الفرقة الثالثة": [
+                    { title: "جبر خطي", link: "link_here.pdf" },
+                    { title: "تحليل عددي", link: "link_here.pdf" },
+                    { title: "ميكانيكا عامة", link: "link_here.pdf" },
+                    { title: "علم نفس تربوي", link: "link_here.pdf" },
+                    { title: "ثقافة إسلامية", link: "link_here.pdf" }
+                ],
+                "الفرقة الرابعة": [
+                    { title: "إحصاء حيوي", link: "link_here.pdf" },
+                    { title: "طرق بحث", link: "link_here.pdf" },
+                    { title: "منطق رياضي", link: "link_here.pdf" },
+                    { title: "بيئة واستدامة", link: "link_here.pdf" },
+                    { title: "قضايا معاصرة", link: "link_here.pdf" }
+                ]
+            }
+        };
+
+        let currentMajor;
+
+        function goHome() {
+            document.getElementById("years").style.display = "none";
+            document.getElementById("subjects").style.display = "none";
+            document.getElementById("majors").style.display = "grid";
+            document.getElementById("sub-title").innerText = "اختر التخصص";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showYears(major) {
+            currentMajor = major;
+            document.getElementById("majors").style.display = "none";
+            document.getElementById("years").style.display = "block";
+            document.getElementById("majorName").innerText = major;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showSubjects(year) {
+            document.getElementById("years").style.display = "none";
+            document.getElementById("subjects").style.display = "block";
+            document.getElementById("yearName").innerText = currentMajor + " - " + year;
+            
+            const list = data[currentMajor][year];
+            let html = "";
+            list.forEach(item => {
+                html += `
+                <div class="subject">
+                    <span>${item.title}</span>
+                    <div class="buttons">
+                        <a href="${item.link}" target="_blank" class="btn-action view">عرض</a>
+                        <a href="${item.link}" download class="btn-action download">تحميل</a>
+                    </div>
+                </div>`;
+            });
+            document.getElementById("subjectsList").innerHTML = html;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function backMajors() { goHome(); }
+        function backYears() {
+            document.getElementById("subjects").style.display = "none";
+            document.getElementById("years").style.display = "block";
+        }
+    </script>
+</body>
+</html>

@@ -47,18 +47,37 @@ if (registerForm) {
   });
 }
 
- //  تسجيل الدخول
+
+
+//  تسجيل الدخول المدمج (أدمن + مستخدمين)
 let loginForm = document.getElementById("loginForm");
 if (loginForm) {
   loginForm.addEventListener("submit", function(e) {
     e.preventDefault();
 
-    let email = document.getElementById("email").value.trim();
+    // جلب القيم من الحقول
+    let emailOrUsername = document.getElementById("email").value.trim();
     let password = document.getElementById("password").value.trim();
 
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+    // --- 1. فحص الدخول كأدمن (admin / 123) ---
+    if (emailOrUsername === "admin" && password === "123") {
+      Swal.fire({
+        title: 'مرحباً أيها المدير! 🛡️',
+        text: 'تم تسجيل دخول المسؤول بنجاح ✅',
+        icon: 'success',
+        confirmButtonText: 'الدخول للوحة التحكم'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // التوجيه للينك الجديد الذي طلبته
+          window.location.href = "dashbo.html"; 
+        }
+      });
+      return; // التوقف هنا لمنع فحص المستخدمين العاديين
+    }
 
-    let user = users.find(u => u.email === email && u.password === password);
+    // --- 2. فحص المستخدمين العاديين من الـ Local Storage ---
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let user = users.find(u => u.email === emailOrUsername && u.password === password);
 
     if (user) {
       localStorage.setItem("currentUser", JSON.stringify(user));
@@ -76,7 +95,7 @@ if (loginForm) {
     } else {
       Swal.fire({
         title: 'خطأ!',
-        text: 'البريد الإلكتروني أو كلمة المرور غير صحيحة ❌',
+        text: 'بيانات الدخول غير صحيحة (تأكد من اسم المستخدم وكلمة المرور) ❌',
         icon: 'error',
         confirmButtonText: 'حاول مرة أخرى'
       });
@@ -84,9 +103,7 @@ if (loginForm) {
   });
 }
 
-
-// 
-
+// كود إظهار وإخفاء كلمة المرور
 const togglePassword = document.getElementById("togglePassword");
 const passwordInput = document.getElementById("password");
 
@@ -98,5 +115,3 @@ if (togglePassword && passwordInput) {
     this.textContent = type === "password" ? "🙈" : "👁️";
   });
 }
-
-

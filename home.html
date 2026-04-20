@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> المعهد العالى بكفرالشيخ</title>
+    <title>    المعهد العالي للإداره وتكنولوجيا المعلومات بكفر الشيخ    </title>
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/bootstrap.rtl.min.css">
     <link rel="stylesheet" href="./css/all.min.css">
-  
+    <link rel="stylesheet" href="./css/New folder/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;800;900&family=Roboto+Flex:opsz,wght@8..144,300;8..144,700;8..144,900&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/main.css">
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 </head>
 <body>
     <!-- start navbar -->
              <nav class="navbar navbar-expand-lg  ">
              <div class="container-fluid">
 
-                <a class="navbar-brand" href="home.html"><img src="/img/308637959_456080916556158_4041691296448312269_n.png" alt=""></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                 <i  class="fa-solid fa-bars" style="color: white;    font-size: 36px;"></i>
               </button>
@@ -29,16 +30,34 @@
                     <a class="nav-link " aria-current="page" href="/home.html"> الرئيسية</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/mohadrate.html" id="mohadrate">المحاضرات</a>
+                    <a class="nav-link" href="/mohdrate2026.html" id="mohadrate">المحاضرات</a>
                   </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      الجداول
+                  <li class="nav-item">
+                    <a class="nav-link" href="/courses.html" id="courses">الكورسات </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#depart" id="courses"> الاقسام العلمية </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/result.html" id="courses"> النتائج  </a>
+                  </li>
+                    <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      الادارات
                     </a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="tableMohdrate.html">جدول المحاضرات </a></li>
-                      <li><a class="dropdown-item" href="tableexam.html">جدول الامتحانات</a></li> 
+                      <li><a class="dropdown-item" href="sh.html"> ادارة شئون الطلاب </a></li>
+                      <li><a class="dropdown-item" href="ra.html"> ادارة رعاية الشباب </a></li> 
+                      <li><a class="dropdown-item" href="te.html"> ادارة تكنولوجيا المعلومات  </a></li> 
+                      <li><a class="dropdown-item" href="ma.html"> ادارة الموارد البشرية </a></li> 
+                      <li><a class="dropdown-item" href="qa.html"> ادارة الشئون القانونية</a></li> 
                     </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link " aria-disabled="true" href="table2.html">الجداول  </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link " aria-disabled="true" href="news.html">اخر الاخبار </a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link " aria-disabled="true" href="information.html">عن المعهد</a>
@@ -53,16 +72,54 @@
           </nav>
   
  <!-- end navbar -->
- <!-- up -->
-<div class="up"><i class="fa-solid fa-arrow-up"></i></div>
- 
 
+<!-- Hero section-->
+<section class="hero">
+<div id="particles-js"></div>
+
+<!-- slides 6 صور -->
+<div class="slide active" style="background-image:url(./panner/1.jpg)"></div>
+<div class="slide active" style="background-image:url(./panner/22222222222222222222222222222.jpg)"></div>
+<div class="slide active" style="background-image:url(./panner/photo-1620570623737-efc0ec4ab486.avif)"></div>
+<div class="slide active" style="background-image:url(./panner/luca-bravo-XJXWbfSo2f0-unsplash.jpg)"></div>
+<div class="slide active" style="background-image:url(./panner/glenn-carstens-peters-npxXWgQ33ZQ-unsplash\ \(1\).jpg)"></div>
+<div class="slide active" style="background-image:url(./panner/istockphoto-1354205079-612x612.jpg)"></div>
+
+<div class="overlay"></div>
+
+<div class="hero-content">
+<h1 id="title"></h1>
+<p id="text">نقدم تعليماً متميزاً لإعداد كوادر قادرة على مواكبة التطور التكنولوجي</p>
+<div class="buttons">
+<a href="/information.html" class="btn-main">تعرف على المعهد</a>
+<a href="#depart" class="btn-outline">الأقسام العلمية</a>
+</div>
+</div>
+
+<!-- أزرار التنقل -->
+<button class="nav-btn nav-left">&#10094;</button>
+<button class="nav-btn nav-right">&#10095;</button>
+
+<div class="indicators">
+<div class="dot active"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+</div>
+
+<div class="scroll">↓</div>
+
+</section>
  <!--  satrt main-->
-
+ 
           <div class="main">
-           <div class="back">
-           <img src="/img/308637959_456080916556158_4041691296448312269_n.png" alt="">
-          </div>
+
+          
+
+
+            
             <p>
              أنشئ المعهد العالى للهندسة والتكنولوجيا بكفرالشيخ طبقاً لقرار وزير التعليم العالى رقم (931) لعام 2006 والصادر بتاريخ 17/6/2006 والذي رخص ببدء الدراسة بالمعهد اعتباراً من العام الجامعي 2006/2007 بمدينة كفر الشيخ.
  
@@ -78,13 +135,155 @@
                       <img src="/img/images (1).jpeg" alt="">
                       <img src="/img/images.jpeg" alt="">
                       <img src="/img/albom7.jpg" alt="">
-                      <img src="/img/download.jpeg" alt="">
+                      <img src="/img/1111111.jpg" alt="">
                       <img src="/img/albom5.jpg" alt="">
                     </div>
                     <!-- end photo -->
+<!--  -->
+<section class="dean-section">
+    <div class="container">
+        <div class="dean-card">
+            
+            <div class="dean-image">
+                <img src="/img/العميد.jpg" alt="أ.د/ رضا ابراهيم صالح">
+            </div>
 
+            <div class="dean-content">
+                <h2 class="dean-title">كلمة عميد المعهد</h2>
+                
+                <div id="typewriter" class="dean-text"></div>
+
+                <div class="dean-footer">
+                    <h4 class="dean-name">أ.د/ رضا ابراهيم صالح</h4>
+                    <p class="dean-role">عميد المعهد العالي للهندسة والتكنولوجيا</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!--  -->
+<section class="counter-section" id="Hitory">
+
+<div class="container">
+<div class="row">
+
+<div class="counter-box">
+<i class="fa fa-users"></i>
+<div class="counter" data-target="1500">0</div>
+<h3>الطلاب الحاليون</h3>
+</div>
+
+<div class="counter-box">
+<i class="fa fa-graduation-cap"></i>
+<div class="counter" data-target="6100">0</div>
+<h3>الخريجون</h3>
+</div>
+
+<div class="counter-box">
+<i class="fa fa-book"></i>
+<div class="counter" data-target="70">0</div>
+<h3>أعضاء هيئة التدريس</h3>
+</div>
+
+<div class="counter-box">
+<i class="fa fa-university"></i>
+<div class="counter" data-target="4">0</div>
+<h3>تخصصات المعهد</h3>
+</div>
+
+</div>
+</div>
+
+</section>
+
+                    <!-- start departments  -->
+                
+<section class="departments" id="depart">
+
+<h2>الأقسام</h2>
+
+<div class="container">
+<div class="cards">
+
+<div class="cardd reveal">
+<a href="/eng.html">
+<img src="/img//هندسة0.webp" alt="">
+</a>
+<a href="/eng.html">هندسة</a>
+<p>قسم هندسة يهتم بتصميم وتطوير الأنظمة الهندسية والتقنيات الحديثة</p>
+</div>
+
+<div class="cardd reveal">
+<a href="/acount.html">
+<img src="/img/الادارة والمحاسبه.jfif" alt="">
+</a>
+<a href="/acount.html">الادارة والمحاسبة</a>
+<p>قسم يهتم بدراسة الإدارة والمحاسبة وإعداد الكوادر القادرة على إدارة الأعمال </p>
+</div>
+
+<div class="cardd reveal">
+<a href="/miss.html">
+<img src="/img/نظم.jfif" alt="">
+</a>
+<a href="/miss.html">نظم المعلومات الادارية</a>
+<p>هو قسم يهتم بدراسة تطبيقات نظم المعلومات الادارية</p>
+</div>
+
+<div class="cardd reveal">
+<a href="/scince.html">
+<img src="/img/علوم.jfif" alt="">
+</a>
+<a href="/scince.html">علوم الحاسب</a>
+<p>قسم يهتم بدراسة البرمجة وتطوير البرمجيات والخوارزميات</p>
+</div>
+
+<div class="cardd reveal">
+<a href="/scincestitc.html">
+<img src="/img/علوم اساسية.jfif" alt="">
+</a>
+<a href="/scincestitc.html">العلوم الاساسية</a>
+<p>قسم يركز على تدريس الرياضيات والإحصاء كأساس للعلوم والتكنولوجيا</p>
+</div>
+
+</div>
+</div>
+
+</section>
+                    <!-- end section -->
+
+
+                <!-- start slider --> 
+<div class="sliders reveal-left">
+
+<h2>اعضاء هيئة التدريس</h2>
+
+<div class="slider">
+
+<div class="card side" id="leftCard">
+<img id="leftImg">
+<h4 id="leftName"></h4>
+<p id="leftJob"></p>
+</div>
+
+<div class="card center" id="centerCard">
+<img id="centerImg">
+<h4 id="centerName"></h4>
+<p id="centerJob"></p>
+</div>
+
+<div class="card side" id="rightCard">
+<img id="rightImg">
+<h4 id="rightName"></h4>
+<p id="rightJob"></p>
+</div>
+
+</div>
+</div>
+<!-- end -->
+                    <!-- end  -->
                     <div class="text">
-                      <h3>  إمكانيات المعهد </h3>
+                      <h2>  إمكانيات المعهد </h2>
                       <p>
 توفير كافة الإمكانيات اللازمة لتقديم رعاية طلابية ثقافية واجتماعية وصحية متكاملة تسمح بتنمية شخصية الطالب وتأهيله ليصبح عضوا فاعلاً في المجتمع، ولتوفير هذه الرعاية يتم إنشاء وتجهيز ما يلي:
 مكتبة علمية: تضم مجموعة من الكتب والمراجع العلمية في مختلف المجالات والموضوعات باللغة العربية واللغات الأجنبية التي تهم المعهد وتثري النشاط العلمي والبحثي بداخله. وكذا التعاون الثقافي مع الهيئات والمكتبات الجامعية والعلمية في نطاق مجالاتها العلمية ويسري علي المكتبة لائحة المكتبات العامة.
@@ -98,32 +297,101 @@
 
                     <!-- end text -->
                   
+<nav id="socialzzz">
+        <ul>
+            <li class="facebook">
+             
+              <a href="https://www.facebook.com/Himit2018/?checkpoint_src=any" target="_Blank">
+           <i class="fa-brands fa-facebook"></i>
+                Facebook
+              </a>
+            </li>
+            <li class="twitter">
+              <a  href="https://x.com/net168480" target="_Blank"><i class="fa-brands fa-x-twitter"></i>
+	
+Twitter
+</a>
+</li>
+
+            <li class="whatzapp"><a href="https://whatsapp.com/dl/">
+             <i class="fa-brands fa-whatsapp"></i>
+                
+              </i>WhatsApp</a>
+            </li>
+
+            <li class="google-plus">
+              <a href="https://youtube.com/@himitkfs?si=LDOaKf5id2u_W6DV" target="_Blank">
+             <i class="fa-brands fa-youtube"></i>
+            </i>YouTube</a></li>
+            <li class="instagram"><a href="https://www.instagram.com/" target="_Blank">
+             <i class="fa-brands fa-instagram"></i>
+
+            </i>Instagram</a></li>
+        </ul>
+    </nav>
+
+
                     <!-- start footer -->
-                    <footer>
-                      <div class="first">
-                        <h5>  للتواصل :  </h5>
+                  
 
-                        <ul class="one">
+                 <footer class="footer">
 
-                        <li><a href="https://www.facebook.com/Himit2018/">  فيسبوك <i class="fa-brands fa-facebook-f"></i> </a></li>
-                        <li><a href="https://www.youtube.com/channel/UCNvfr2Fx-C0YgZ1KNh69g9w"> يوتيوب <i class="fa-brands fa-youtube"></i>   </a></li>
-                        <li><a href="">  واتساب  <i class="fa-brands fa-whatsapp"></i> </a></li>
-                        <li><a href=""> تويتر  <i class="fa-brands fa-twitter"></i> </a></li>
-                        <li><a href="">  تليحرام <i class="fa-brands fa-telegram"></i> </a></li>
-                      </ul>
-                      </div>
+  <div class="container">
+    <div class="row">
 
-                      <div  class="second">
-                        <!-- <h5>  تم تصميم وتطوير الموقع بواسطة :   </h5> -->
-                        <ul class="two">
-<!--                     
-                        <li>  <bold>  تيم    </bold></li> -->
-                      
-                      </ul>
-                      </div>
-                    </footer>   
-    <script src="/js/all.min.js"></script>
-    <script src="/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/main.js"></script>
+      <!-- Departments -->
+      <div class="col">
+        <h3>الأقسام</h3>
+        <ul>
+          <li><a href="#">الإدارة والمحاسبة</a></li>
+          <li><a href="#">نظم المعلومات الإدارية</a></li>
+          <li><a href="#">علوم الحاسب</a></li>
+          <li><a href="#">العلوم الأساسية</a></li>
+        </ul>
+      </div>
+
+      <!-- Links -->
+      <div class="col">
+        <h3>روابط</h3>
+        <ul>
+          <li><a href="#">الرئيسية</a></li>
+          <li><a href="#">عن المعهد</a></li>
+          <li><a href="#">الوحدات</a></li>
+          <li><a href="#">الأخبار</a></li>
+          <li><a href="#">إدارة المعهد</a></li>
+          <li><a href="#">اتصل بنا</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="col">
+        <h3>اتصل بنا</h3>
+        <ul class="contact">
+          <li>📞 0473278920</li>
+          <li>📧 info@himit-kfs.edu.eg</li>
+          <li>📍 كفر الشيخ - الصوالحة</li>
+        </ul>
+      </div>
+
+    </div>
+ 
+    </div>
+
+  </div>
+   <div class="bottom-footer">
+        <marquee style="width: 100%;text-align: left;">
+
+                        <p style="text-transform:none;">
+                            Copyright© 2026. designed by <a style="color:#f2d21e;">Programming and Development Team  </a>
+                        </p>
+                    
+        </marquee>
+
+</footer>
+
+<script src="/js/all.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/main.js"></script>
+
 </body>
 </html>

@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>النظام الإداري المتكامل | HIMIT 2026</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --sidebar-bg: #001f3f;
+            --navbar-bg: #ffffff;
+            --accent: #f2d21e;
+            --body-bg: #f4f7fe;
+            --card-white: #ffffff;
+            --text-dark: #2b3674;
+            --danger: #ff4d4d;
+            --success: #2ecc71;
+            --info: #3498db;
+        }
+
+        * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
+        body { background-color: var(--body-bg); display: flex; min-height: 100vh; }
+
+        /* Navbar العلوي الجديد */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 280px; /* نفس عرض السايدبار */
+            height: 70px;
+            background: var(--navbar-bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            z-index: 999;
+        }
+
+        .nav-title { font-weight: 700; color: var(--text-dark); font-size: 1.1rem; }
+        
+        .btn-back-home {
+            background: var(--sidebar-bg);
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-back-home:hover { background: var(--info); transform: translateY(-2px); }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            right: 0;
+            top: 0;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        .sidebar-header { padding: 30px; text-align: center; background: rgba(0,0,0,0.2); font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .menu-list { list-style: none; padding: 10px 0; }
+        .menu-item {
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+            color: rgba(255,255,255,0.7);
+        }
+        .menu-item i { margin-left: 15px; width: 25px; text-align: center; }
+        .menu-item:hover, .menu-item.active { color: var(--accent); background: rgba(255,255,255,0.05); border-right: 5px solid var(--accent); }
+
+        /* Main Content */
+        .main-content { 
+            margin-right: 280px; 
+            width: calc(100% - 280px); 
+            padding: 100px 30px 30px 30px; /* زيادة padding top بسبب الناف بار */
+            transition: 0.3s; 
+        }
+
+        .page-section { display: none; animation: fadeIn 0.4s ease; }
+        .page-section.active-page { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Cards & UI */
+        .card { background: var(--card-white); padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; border-radius: 10px; overflow: hidden; }
+        th, td { padding: 15px; text-align: right; border-bottom: 1px solid #eee; }
+        th { background: #f8f9ff; color: var(--sidebar-bg); font-weight: 700; }
+
+        /* Form Elements */
+        .form-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        input, select, textarea { padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; width: 100%; font-family: 'Cairo'; }
+
+        /* Buttons */
+        .btn { padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; transition: 0.2s; font-family: 'Cairo'; }
+        .btn-add { background: var(--sidebar-bg); color: white; }
+        .btn-edit { background: var(--info); color: white; margin-left: 5px; }
+        .btn-del { background: var(--danger); color: white; }
+
+        .toast { position: fixed; bottom: 20px; left: 20px; background: #333; color: white; padding: 15px 25px; border-radius: 10px; display: none; z-index: 2000; }
+        .badge { padding: 4px 10px; border-radius: 5px; font-size: 12px; font-weight: bold; }
+        .bg-success { background: #e3f9eb; color: #2ecc71; }
+
+        @media (max-width: 992px) {
+            .navbar { right: 0; }
+            .sidebar { display: none; }
+            .main-content { margin-right: 0; width: 100%; }
+        }
+        .btn-exit-to-home {
+    background: var(--danger); /* لون أحمر للتنبيه بالخروج */
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(229, 62, 62, 0.3);
+}
+
+.btn-exit-to-home:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(229, 62, 62, 0.4);
+}
+    </style>
+</head>
+<body>
+
+    <div id="toast" class="toast">تمت العملية بنجاح!</div>
+
+    <nav class="navbar">
+    <div style="font-weight: 800; color: var(--sidebar-bg); font-size: 1.2rem;">لوحة التحكم الإدارية</div>
+    <a href="index.html" class="btn-exit-to-home">
+        <i class="fas fa-sign-out-alt"></i> الخروج للصفحة الرئيسية
+    </a>
+</nav>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">لوحة تحكم </div>
+        <ul class="menu-list">
+            <li class="menu-item active" onclick="showPage('home', this)"><i class="fas fa-home"></i> الرئيسية</li>
+            <li class="menu-item" onclick="showPage('students', this)"><i class="fas fa-user-graduate"></i> الطلاب</li>
+            <li class="menu-item" onclick="showPage('schedule', this)"><i class="fas fa-calendar-alt"></i> جدول المحاضرات</li>
+            <li class="menu-item" onclick="showPage('courses', this)"><i class="fas fa-laptop-code"></i> الكورسات</li>
+            <li class="menu-item" onclick="showPage('library', this)"><i class="fas fa-book"></i> المكتبة</li>
+            <li class="menu-item" onclick="showPage('exams', this)"><i class="fas fa-file-signature"></i> الاختبارات</li>
+            <li class="menu-item" onclick="showPage('finance', this)"><i class="fas fa-dollar-sign"></i> المالية</li>
+            <li class="menu-item" onclick="showPage('news', this)"><i class="fas fa-bullhorn"></i> الأخبار</li>
+            <li class="menu-item" onclick="showPage('settings', this)"><i class="fas fa-cog"></i> الإعدادات</li>
+            <a href="index.html" class="menu-item" style="text-decoration:none;"><i class="fas fa-sign-out-alt"></i> خروج</a>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <section id="home" class="page-section active-page">
+            <h2>إحصائيات النظام العامة</h2>
+            <div class="stats-grid">
+                <div class="card"><h5>إجمالي الطلاب</h5><h2 id="dash-st-count">30000</h2></div>
+                <div class="card"><h5>إجمالي الكورسات</h5><h2 id="dash-c-count">20</h2></div>
+                <div class="card"><h5>الرسائل</h5><h2>120</h2></div>
+            </div>
+            <div class="card">
+                <h4 style="margin-bottom:15px">تفاعل المنصة</h4>
+                <canvas id="mainChart" height="100"></canvas>
+            </div>
+        </section>
+
+        <section id="students" class="page-section">
+            <h2>إدارة الطلاب</h2>
+            <div class="card">
+                <h4>إضافة / تعديل طالب</h4>
+                <div class="form-group">
+                    <input type="hidden" id="st-edit-index" value="-1">
+                    <input type="text" id="st-name" placeholder="اسم الطالب">
+                    <select id="st-dept">
+                        <option>نظم معلومات</option>
+                        <option>علوم حاسب</option>
+                        <option>إدارة أعمال</option>
+                    </select>
+                    <button class="btn btn-add" onclick="handleStudent()">حفظ البيانات</button>
+                </div>
+                <table>
+                    <thead><tr><th>الاسم</th><th>القسم</th><th>الإجراءات</th></tr></thead>
+                    <tbody id="st-table">
+                      <tr><td>أحمد إبراهيم خليل</td><td>نظم معلومات</td><td>
+    <button class="btn btn-edit" onclick="editStudent(this)">تعديل</button>
+    <button class="btn btn-del" onclick="deleteRow(this, 'st')">حذف</button>
+</td></tr>
+<tr><td>سارة محمود حسن</td><td>علوم حاسب</td><td>
+    <button class="btn btn-edit" onclick="editStudent(this)">تعديل</button>
+    <button class="btn btn-del" onclick="deleteRow(this, 'st')">حذف</button>
+</td></tr>
+<tr><td>ياسين علي كامل</td><td>إدارة أعمال</td><td>
+    <button class="btn btn-edit" onclick="editStudent(this)">تعديل</button>
+    <button class="btn btn-del" onclick="deleteRow(this, 'st')">حذف</button>
+</td></tr>
+<tr><td>ليلى يوسف رضوان</td><td>نظم معلومات</td><td>
+    <button class="btn btn-edit" onclick="editStudent(this)">تعديل</button>
+    <button class="btn btn-del" onclick="deleteRow(this, 'st')">حذف</button>
+</td></tr>
+<tr><td>عمر خالد مصطفى</td><td>علوم حاسب</td><td>
+    <button class="btn btn-edit" onclick="editStudent(this)">تعديل</button>
+    <button class="btn btn-del" onclick="deleteRow(this, 'st')">حذف</button>
+</td></tr>
+<tr><td>نور السيد عبد العزيز</td><td>إدارة أعمال</td><td>
+    <button class="btn btn-edit" onclick="editStudent(this)">تعديل</button>
+    <button class="btn btn-del" onclick="deleteRow(this, 'st')">حذف</button>
+</td></tr>
+<tr><td>يوسف طارق الجندي</td><td>نظم معلومات</td><td>
+    <button class="btn btn-edit" onclick="editStudent(this)">تعديل</button>
+    <button class="btn btn-del" onclick="deleteRow(this, 'st')">حذف</button>
+</td></tr>
+<tr><td>مريم حسن زكي</td><td>علوم حاسب</td><td>
+    <button class="btn btn-edit" onclick="editStudent(this)">تعديل</button>
+    <button class="btn btn-del" onclick="deleteRow(this, 'st')">حذف</button>
+</td></tr>
+<tr><td>حمزة عبد الله ناصر</td><td>إدارة أعمال</td><td>
+    <button class="btn btn-edit" onclick="editStudent(this)">تعديل</button>
+    <button class="btn btn-del" onclick="deleteRow(this, 'st')">حذف</button>
+</td></tr>
+<tr><td>جنا فوزي السعيد</td><td>نظم معلومات</td><td>
+    <button class="btn btn-edit" onclick="editStudent(this)">تعديل</button>
+    <button class="btn btn-del" onclick="deleteRow(this, 'st')">حذف</button>
+</td></tr>
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="schedule" class="page-section">
+            <h2>جدول المحاضرات</h2>
+            <div class="card">
+                <div class="form-group">
+                    <input type="text" id="sch-sub" placeholder="المادة">
+                    <input type="text" id="sch-time" placeholder="الوقت">
+                    <button class="btn btn-add" onclick="addItem('sch')">إضافة مادة</button>
+                </div>
+                <table id="sch-table">
+                    <thead><tr><th>المادة</th><th>الموعد</th><th>حذف</th></tr></thead>
+                    <tbody>
+                        
+                       <tr><td>هياكل البيانات</td><td>08:00 ص</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>قواعد البيانات</td><td>09:30 ص</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>نظم التشغيل</td><td>11:00 ص</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>الذكاء الاصطناعي</td><td>12:30 م</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>هندسة البرمجيات</td><td>02:00 م</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>أمن الشبكات</td><td>08:30 ص</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>تحليل وتصميم النظم</td><td>10:00 ص</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>تفاعل الإنسان والحاسوب</td><td>11:30 ص</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>التنقيب في البيانات</td><td>01:00 م</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>الحوسبة السحابية</td><td>02:30 م</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="courses" class="page-section">
+            <h2>إدارة الكورسات</h2>
+            <div class="card">
+                <div class="form-group">
+                    <input type="text" id="cor-name" placeholder="اسم الكورس">
+                    <button class="btn btn-add" onclick="addItem('cor')">إضافة كورس</button>
+                </div>
+                <table id="cor-table">
+                    <thead><tr><th>الكورس</th><th>إجراءات</th></tr></thead>
+                    <tbody>
+                     <tr><td>دورة Python الشاملة</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+<tr><td>دورة C++ الشاملة</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+<tr><td>دورة C الشاملة</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+<tr><td>دورة HTML5 الشاملة</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+<tr><td>دورة CSS3 المتقدمة</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+<tr><td>دورة JavaScript الأساسية</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+<tr><td>دورة React.js لبناء المواقع</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+<tr><td>دورة PHP وبرمجة السيرفر</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+<tr><td>دورة MySQL لإدارة قواعد البيانات</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+<tr><td>دورة Java لمطوري الأندرويد</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+<tr><td>دورة الأمن السيبراني (Ethical Hacking)</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+<tr><td>دورة الذكاء الاصطناعي وعلوم البيانات</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+<tr><td>دورة التصميم الجرافيكي (Photoshop)</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+<tr><td>دورة هندسة البرمجيات وإدارة المشاريع</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+<tr><td>دورة الشبكات (CCNA) المعتمدة</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="library" class="page-section">
+            <h2>المكتبة الرقمية</h2>
+            <div class="card">
+                <div class="form-group">
+                    <input type="text" id="lib-book" placeholder="اسم الكتاب">
+                    <button class="btn btn-add" onclick="addItem('lib')">إضافة كتاب</button>
+                </div>
+                <table id="lib-table">
+                    <thead><tr><th>الكتاب</th><th>حذف</th></tr></thead>
+                    <tbody>
+                    <tr><td>مرجع أساسيات البرمجة بلغة C++</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>كتاب تحليل وتصميم خوارزميات الحاسوب</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>دليل لغة Python من الصفر للاحتراف</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>كتاب مبادئ الذكاء الاصطناعي والتعلم الآلي</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>مرجع هندسة البيانات الضخمة (Big Data)</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>كتاب تطوير تطبيقات الويب باستخدام React</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>دليل إدارة أمن المعلومات والشبكات</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>كتاب تصميم واجهات المستخدم (UI/UX)</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>مرجع قواعد البيانات SQL و NoSQL</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>كتاب مقدمة في الحوسبة السحابية و Azure</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="exams" class="page-section">
+            <h2>رصد النتائج</h2>
+            <div class="card">
+                <div class="form-group">
+                    <input type="text" id="ex-st" placeholder="اسم الطالب">
+                    <input type="number" id="ex-gr" placeholder="الدرجة">
+                    <button class="btn btn-add" onclick="addItem('ex')">رصد الدرجة</button>
+                </div>
+                <table id="ex-table">
+                    <thead><tr><th>الطالب</th><th>الدرجة</th><th>حذف</th></tr></thead>
+                    <tbody>
+                        <tr><td>محمد عزت</td><td>90</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+                        <tr><td>أحمد إبراهيم</td><td>95</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>سارة محمود</td><td>88</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>ياسين علي</td><td>76</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>ليلى يوسف</td><td>92</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>عمر خالد</td><td>81</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>نور السيد</td><td>89</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>يوسف طارق</td><td>70</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>مريم حسن</td><td>98</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>حمزة عبد الله</td><td>84</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+<tr><td>جنا فوزي</td><td>91</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="finance" class="page-section">
+            <h2>إدارة المصروفات</h2>
+            <div class="card">
+                <div class="form-group">
+                    <input type="text" id="fin-st" placeholder="اسم الطالب">
+                    <input type="text" id="fin-val" placeholder="المبلغ">
+                    <button class="btn btn-add" onclick="addItem('fin')">تسجيل دفعة</button>
+                </div>
+                <table id="fin-table">
+                    <thead><tr><th>الطالب</th><th>المبلغ</th><th>الحالة</th></tr></thead>
+                    <tbody>
+                <tr><td>أحمد إبراهيم</td><td>1200$</td><td><span class="badge bg-success">مدفوع</span></td></tr>
+<tr><td>منى السيد</td><td>450$</td><td><span class="badge bg-success">مدفوع</span></td></tr>
+<tr><td>ياسين علي</td><td>800$</td><td><span class="badge bg-success">مدفوع</span></td></tr>
+<tr><td>ليلى يوسف</td><td>300$</td><td><span class="badge bg-success">مدفوع</span></td></tr>
+<tr><td>عمر خالد</td><td>1500$</td><td><span class="badge bg-success">مدفوع</span></td></tr>
+<tr><td>نور حسن</td><td>600$</td><td><span class="badge bg-success">مدفوع</span></td></tr>
+<tr><td>يوسف طارق</td><td>950$</td><td><span class="badge bg-success">مدفوع</span></td></tr>
+<tr><td>مريم فوزي</td><td>2000$</td><td><span class="badge bg-success">مدفوع</span></td></tr>
+<tr><td>حمزة عبد الله</td><td>750$</td><td><span class="badge bg-success">مدفوع</span></td></tr>
+<tr><td>جنا محمود</td><td>1100$</td><td><span class="badge bg-success">مدفوع</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="news" class="page-section">
+            <h2>مركز الأخبار</h2>
+            <div class="card">
+                <textarea id="news-in" placeholder="اكتب الخبر هنا..." rows="3"></textarea>
+                <button class="btn btn-add" style="width:100%; margin-top:10px;" onclick="addItem('news')">نشر الإعلان</button>
+                <div id="news-container" style="margin-top:20px;">
+                  <div class="card" style="background:#eef2f7;">📢 تنبيه: عطلة رسمية يوم الخميس القادم بجميع الأقسام.</div>
+<div class="card" style="background:#eef2f7;">📢 هام: فتح باب التسجيل في دورة الذكاء الاصطناعي المتقدمة بالمكتبة.</div>
+<div class="card" style="background:#eef2f7;">📢 ملاحظة: تم تعديل موعد محاضرة هندسة البرمجيات لتصبح الساعة 12:00 ظهراً.</div>
+<div class="card" style="background:#eef2f7;">📢 عاجل: جدول امتحانات الفصل الدراسي الأول متاح الآن في قسم الاختبارات.</div>
+<div class="card" style="background:#eef2f7;">📢 تنبيه: يرجى من جميع الطلاب سرعة سداد المصروفات الدراسية المتبقية.</div>
+<div class="card" style="background:#eef2f7;">📢 إعلان: غداً هو آخر موعد لتسليم مشاريع التخرج للمستوى الرابع.</div>
+<div class="card" style="background:#eef2f7;">📢 تنبيه: سيتم إجراء صيانة دورية للمنصة الإلكترونية غداً الساعة 2 صباحاً.</div>
+<div class="card" style="background:#eef2f7;">📢 خبر: المعهد ينظم رحلة ترفيهية لطلاب قسم علوم الحاسب يوم السبت القادم.</div>
+<div class="card" style="background:#eef2f7;">📢 هام: يرجى تحديث بيانات الاتصال الخاصة بكم من صفحة الإعدادات الشخصية.</div>
+<div class="card" style="background:#eef2f7;">📢 تنبيه: ممنوع التدخين داخل الحرم الأكاديمي والقاعات الدراسية نهائياً.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="settings" class="page-section">
+            <h2>إعدادات النظام</h2>
+            <div class="card">
+                <label>اسم المؤسسة</label>
+                <input type="text" value="HIMIT Institute 2026">
+                <label style="margin-top:10px; display:block;">كلمة مرور الإدارة</label>
+                <input type="password" value="********">
+                <button class="btn btn-add" style="margin-top:15px;" onclick="showToast('تم حفظ الإعدادات')">حفظ التغييرات</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 1. التبديل بين الصفحات
+        function showPage(id, el) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active-page'));
+            document.getElementById(id).classList.add('active-page');
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+            if(el) el.classList.add('active');
+        }
+
+        // 2. إدارة الطلاب
+        function handleStudent() {
+            const name = document.getElementById('st-name').value;
+            const dept = document.getElementById('st-dept').value;
+            const editIdx = document.getElementById('st-edit-index').value;
+
+            if(!name) return;
+
+            if(editIdx == "-1") {
+                const row = `<tr><td>${name}</td><td>${dept}</td><td><button class="btn btn-edit" onclick="editStudent(this)">تعديل</button><button class="btn btn-del" onclick="deleteRow(this, 'st')">حذف</button></td></tr>`;
+                document.getElementById('st-table').innerHTML += row;
+            } else {
+                const row = document.getElementById('st-table').rows[editIdx];
+                row.cells[0].innerText = name;
+                row.cells[1].innerText = dept;
+                document.getElementById('st-edit-index').value = "-1";
+            }
+            
+            document.getElementById('st-name').value = "";
+            showToast("تم حفظ بيانات الطالب");
+            updateDashboard();
+        }
+
+        function editStudent(btn) {
+            const row = btn.closest('tr');
+            document.getElementById('st-name').value = row.cells[0].innerText;
+            document.getElementById('st-dept').value = row.cells[1].innerText;
+            document.getElementById('st-edit-index').value = row.rowIndex - 1;
+            showPage('students', document.querySelector('[onclick*="students"]'));
+        }
+
+        // 3. إضافة عامة
+        function addItem(type) {
+            let row = "";
+            if(type === 'sch') {
+                const sub = document.getElementById('sch-sub').value;
+                const time = document.getElementById('sch-time').value;
+                if(!sub) return;
+                row = `<tr><td>${sub}</td><td>${time}</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>`;
+                document.querySelector('#sch-table tbody').innerHTML += row;
+            } else if(type === 'cor') {
+                const name = document.getElementById('cor-name').value;
+                if(!name) return;
+                row = `<tr><td>${name}</td><td><button class="btn btn-del" onclick="deleteRow(this, 'cor')">حذف</button></td></tr>`;
+                document.querySelector('#cor-table tbody').innerHTML += row;
+            } else if(type === 'lib') {
+                const book = document.getElementById('lib-book').value;
+                if(!book) return;
+                row = `<tr><td>${book}</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>`;
+                document.querySelector('#lib-table tbody').innerHTML += row;
+            } else if(type === 'ex') {
+                const st = document.getElementById('ex-st').value;
+                const gr = document.getElementById('ex-gr').value;
+                if(!st) return;
+                row = `<tr><td>${st}</td><td>${gr}</td><td><button class="btn btn-del" onclick="deleteRow(this)">حذف</button></td></tr>`;
+                document.querySelector('#ex-table tbody').innerHTML += row;
+            } else if(type === 'fin') {
+                const st = document.getElementById('fin-st').value;
+                const val = document.getElementById('fin-val').value;
+                if(!st) return;
+                row = `<tr><td>${st}</td><td>${val}</td><td><span class="badge bg-success">مدفوع</span></td></tr>`;
+                document.querySelector('#fin-table tbody').innerHTML += row;
+            } else if(type === 'news') {
+                const txt = document.getElementById('news-in').value;
+                if(!txt) return;
+                const card = `<div class="card" style="background:#eef2f7;">📢 ${txt}</div>`;
+                document.getElementById('news-container').innerHTML = card + document.getElementById('news-container').innerHTML;
+                document.getElementById('news-in').value = "";
+            }
+            showToast("تمت الإضافة بنجاح");
+            updateDashboard();
+        }
+
+        function deleteRow(btn) {
+            if(confirm("هل أنت متأكد؟")) {
+                btn.closest('tr').remove();
+                showToast("تم الحذف");
+                updateDashboard();
+            }
+        }
+
+        function updateDashboard() {
+            document.getElementById('dash-st-count').innerText = document.getElementById('st-table').rows.length;
+            document.getElementById('dash-c-count').innerText = document.getElementById('cor-table').rows.length;
+        }
+
+        function showToast(m) {
+            const t = document.getElementById('toast');
+            t.innerText = m; t.style.display = "block";
+            setTimeout(() => t.style.display = "none", 3000);
+        }
+
+        // الرسم البياني
+        const ctx = document.getElementById('mainChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['يناير', 'فبراير', 'مارس', 'ابريل'],
+                datasets: [{
+                    label: 'النشاط الأكاديمي',
+                    data: [30, 50, 40, 70],
+                    borderColor: '#f2d21e',
+                    fill: true,
+                    backgroundColor: 'rgba(242, 210, 30, 0.1)'
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
+

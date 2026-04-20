@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كورسات البرمجة | المعهد العالي كفر الشيخ</title>
+    
+    <link rel="stylesheet" href="./css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="./css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #003366;
+            --accent: #f2d21e;
+            --text-dark: #2d3436;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        /* Navbar Customization */
+        .navbar {
+            background: rgba(0, 51, 102, 0.95) !important;
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+        }
+        .nav-link {
+            color: #fff !important;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .nav-link:hover { color: var(--accent) !important; }
+
+        /* Hero Section */
+        .hero-header {
+            text-align: center;
+            padding: 80px 0 40px;
+        }
+        .hero-header h1 {
+            font-weight: 900;
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .hero-header p {
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        /* Course Cards Grid */
+        .course-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .custom-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none !important;
+        }
+
+        .custom-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .card-img-wrapper {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .custom-card:hover img { transform: scale(1.1); }
+
+        .card-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .card-body-content {
+            padding: 25px;
+            flex-grow: 1;
+        }
+
+        .card-body-content h3 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .card-body-content p {
+            color: #636e72;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .card-footer-action {
+            padding: 15px 25px;
+            background: #f1f2f6;
+            text-align: left;
+            color: var(--primary);
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+           /* footer */
+
+.footer {
+  background: #0f172a;
+    color: #fff;
+    height: 403px;
+    font-family: "Cairo", sans-serif;
+    padding: 20px;
+    font-size: 1.4em;
+}
+
+/* layout */
+.footer .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.footer .col {
+  flex: 1 1 220px;
+}
+
+/* logo */
+.footer-logo img {
+  width: 120px;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.footer-logo img:hover {
+  transform: scale(1.05);
+}
+
+/* titles */
+.footer h3 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.footer h3::after {
+  content: "";
+  width: 40px;
+  height: 3px;
+  position: absolute;
+  bottom: -8px;
+  right: 0;
+  border-radius: 10px;
+}
+
+/* list */
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer ul li {
+  margin-bottom: 12px;
+}
+
+/* links */
+.footer a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: 0.3s;
+  display: inline-block;
+}
+
+.footer a:hover {
+  color: #dc3535d9;
+  transform: translateX(-5px);
+}
+
+/* contact */
+.contact li {
+  font-size: 20px;
+  color: #cbd5e1;
+}
+
+/* spacing bottom */
+
+/* responsive */
+@media (max-width: 768px) {
+  .footer .row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer h3::after {
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+
+     
+    </style>
+</head>
+<body>
+
+    <header class="hero-header container">
+        <h1>منصة الكورسات التدريبية</h1>
+        <p>اختر مسارك التعليمي وابدأ رحلتك في عالم التكنولوجيا مع أفضل المصادر التعليمية</p>
+    </header>
+
+    <main class="course-container">
+        
+        <a href="https://youtu.be/LWCBg5tb64I" class="custom-card">
+            <div class="card-img-wrapper">
+                <span class="card-tag">مبتدئ</span>
+                <img src="/img/أساسيات-البرمجة-للمبتدئين.png" alt="Programming Basics">
+            </div>
+            <div class="card-body-content">
+                <h3>تأسيس البرمجة (CS)</h3>
+                <p>افهم كيف يعمل الحاسوب، تعلم المنطق البرمجي، وهيكلة البيانات من الصفر تماماً.</p>
+            </div>
+            <div class="card-footer-action">
+                <span>مشاهدة الكورس</span>
+                <i class="fas fa-play-circle"></i>
+            </div>
+        </a>
+
+        <a href="https://youtu.be/6QAELgirvjs" class="custom-card">
+            <div class="card-img-wrapper">
+                <span class="card-tag">ويب</span>
+                <img src="/img/web.jfif" alt="Web Development">
+            </div>
+            <div class="card-body-content">
+                <h3>تطوير الويب المتكامل</h3>
+                <p>اتقن بناء المواقع باستخدام HTML5, CSS3 و JavaScript الحديثة لبناء واجهات احترافية.</p>
+            </div>
+            <div class="card-footer-action">
+                <span>مشاهدة الكورس</span>
+                <i class="fas fa-play-circle"></i>
+            </div>
+        </a>
+
+        <a href="https://youtu.be/6bSP4vazmyw" class="custom-card">
+            <div class="card-img-wrapper">
+                <span class="card-tag">موبايل</span>
+                <img src="/img/app.jpg" alt="Mobile App">
+            </div>
+            <div class="card-body-content">
+                <h3>تطبيقات الموبايل (Flutter)</h3>
+                <p>تعلم إطار عمل Flutter من جوجل لبرمجة تطبيقات Android و iOS بكود برمجي واحد.</p>
+            </div>
+            <div class="card-footer-action">
+                <span>مشاهدة الكورس</span>
+                <i class="fas fa-play-circle"></i>
+            </div>
+        </a>
+
+        <a href="https://youtu.be/VyXQ8CMIQl4" class="custom-card">
+            <div class="card-img-wrapper">
+                <span class="card-tag">أمن</span>
+                <img src="/img/سايبر.jfif" alt="Cyber Security">
+            </div>
+            <div class="card-body-content">
+                <h3>الأمن السيبراني</h3>
+                <p>تعلم كيفية حماية الأنظمة، أساسيات التشفير، وطرق اكتشاف الثغرات الأمنية.</p>
+            </div>
+            <div class="card-footer-action">
+                <span>مشاهدة الكورس</span>
+                <i class="fas fa-play-circle"></i>
+            </div>
+        </a>
+
+    </main>
+         <footer class="footer">
+
+  <div class="container">
+    <div class="row">
+
+      <!-- Departments -->
+      <div class="col">
+        <h3>الأقسام</h3>
+        <ul>
+          <li><a href="#">الإدارة والمحاسبة</a></li>
+          <li><a href="#">نظم المعلومات الإدارية</a></li>
+          <li><a href="#">علوم الحاسب</a></li>
+          <li><a href="#">العلوم الأساسية</a></li>
+        </ul>
+      </div>
+
+      <!-- Links -->
+      <div class="col">
+        <h3>روابط</h3>
+        <ul>
+          <li><a href="/home.html">الرئيسية</a></li>
+          <li><a href="/information.html">عن المعهد</a></li>
+          <li><a href="#">الوحدات</a></li>
+          <li><a href="/news.html">الأخبار</a></li>
+          <li><a href="#">إدارة المعهد</a></li>
+          <li><a href="#">اتصل بنا</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="col">
+        <h3>اتصل بنا</h3>
+        <ul class="contact">
+          <li>📞 0473278920</li>
+          <li>📧 info@himit-kfs.edu.eg</li>
+          <li>📍 كفر الشيخ - الصوالحة</li>
+        </ul>
+      </div>
+
+    </div>
+ 
+    </div>
+
+  </div>
+   <div class="bottom-footer">
+        <marquee style="width: 100%;text-align: left;">
+
+                        <p style="text-transform:none;">
+                            Copyright© 2026. designed by <a style="color:#f2d21e;">Programming and Development Team  </a>
+                        </p>
+                    
+        </marquee>
+
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
