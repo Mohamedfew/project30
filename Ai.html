@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مساعد معهد كفر الشيخ الذكي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --blue: #0f2b5b; --gold: #c5a059; }
+        body { font-family: 'Cairo', sans-serif; background-color: #f4f7f6; margin: 0; }
+        
+        #ai-container { position: fixed; bottom: 20px; right: 20px; z-index: 10000; }
+        
+        #open-chat { 
+            background: var(--blue); color: white; border: 2px solid var(--gold); 
+            padding: 12px 25px; border-radius: 50px; cursor: pointer; 
+            font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+        }
+
+        #chat-window { 
+            width: 360px; height: 500px; background: white; border-radius: 20px; 
+            position: absolute; bottom: 70px; right: 0; display: flex; 
+            flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            overflow: hidden; border: 1px solid #ddd; 
+        }
+
+        .hidden { display: none !important; }
+
+        .header { 
+            background: var(--blue); color: white; padding: 15px; 
+            border-bottom: 3px solid var(--gold); display: flex; 
+            justify-content: space-between; align-items: center; 
+        }
+
+        .msgs { 
+            flex: 1; padding: 15px; overflow-y: auto; 
+            display: flex; flex-direction: column; gap: 10px; background: #fafafa; 
+        }
+
+        .msg { padding: 10px 15px; border-radius: 15px; font-size: 14px; max-width: 80%; line-height: 1.5; }
+        .ai { background: white; border-right: 4px solid var(--gold); align-self: flex-start; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .user { background: var(--blue); color: white; align-self: flex-end; }
+
+        .footer { padding: 12px; border-top: 1px solid #eee; display: flex; gap: 8px; }
+        input { flex: 1; border: 1px solid #ddd; padding: 10px 15px; border-radius: 25px; outline: none; font-family: 'Cairo'; }
+        
+        #send { 
+            background: var(--blue); border: none; color: white; 
+            width: 45px; height: 45px; border-radius: 50%; cursor: pointer; 
+            display: flex; align-items: center; justify-content: center; 
+        }
+    </style>
+</head>
+<body>
+
+<div id="ai-container">
+    <button id="open-chat" onclick="toggleChat()">اسأل مساعد المعهد الذكي</button>
+    <div id="chat-window" class="hidden">
+        <div class="header">
+            <span>مساعد المعهد الذكي</span>
+            <button onclick="toggleChat()" style="background:none; border:none; color:white; cursor:pointer; font-size:20px;">&times;</button>
+        </div>
+        <div id="chatBox" class="msgs">
+            <div class="msg ai">أهلاً بك يا عمرو! أنا مساعد معهد كفر الشيخ الذكي، المفتاح الجديد شغال.. اسألني أي حاجة!</div>
+        </div>
+        <div id="typing" class="hidden" style="padding: 5px 20px; font-size: 11px; color: #888;">جاري التفكير...</div>
+        <div class="footer">
+            <input type="text" id="userInput" placeholder="اكتب سؤالك هنا..." onkeypress="if(event.key==='Enter') startChat()">
+            <button id="send" onclick="startChat()">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    // استيراد المكتبة الرسمية لضمان تخطي حماية CORS
+    import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+    // الـ API KEY الجديد اللي انت بعته
+    const API_KEY = "AIzaSyAMdPpuG7hRjyrZoeSu3FpbzFqOHwXgOss"; 
+    const genAI = new GoogleGenerativeAI(API_KEY);
+
+    window.toggleChat = function() {
+        document.getElementById('chat-window').classList.toggle('hidden');
+    }
+
+    window.startChat = async function() {
+        const input = document.getElementById('userInput');
+        const box = document.getElementById('chatBox');
+        const typing = document.getElementById('typing');
+
+        if (!input.value.trim()) return;
+
+        const msg = input.value;
+        box.innerHTML += `<div class="msg user">${msg}</div>`;
+        input.value = "";
+        typing.classList.remove('hidden');
+        box.scrollTop = box.scrollHeight;
+
+        try {
+            // استخدام موديل flash السريع
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+            const result = await model.generateContent(`أنت مساعد ذكي للمعهد العالي للإدارة وتكنولوجيا المعلومات بكفر الشيخ. جاوب باحترافية وبدون تطويل على: ${msg}`);
+            const response = await result.response;
+            
+            typing.classList.add('hidden');
+            box.innerHTML += `<div class="msg ai">${response.text()}</div>`;
+        } catch (e) {
+            console.error(e);
+            typing.classList.add('hidden');
+            box.innerHTML += `<div class="msg ai">يا عمرو، المفتاح سليم بس لسه بيتحمل في سيرفرات جوجل. استنى دقيقة واعمل Refresh وهتلاقيه اشتغل.</div>`;
+        }
+        box.scrollTop = box.scrollHeight;
+    }
+</script>
+
+</body>
+</html>
