@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>بوابة الزوار</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f7f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .visitor-btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            color: #fff;
+            background-color: #2c3e50;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .visitor-btn:hover {
+            background-color: #34495e;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="visitor-btn" onclick="welcomeSpeech()">الدخول كزائر</button>
+
+    <script>
+        function welcomeSpeech() {
+            // النص المطلوب نطقه
+            const text = "   المعهد العالي للإدارة وتكنولوجيا المعلومات بكفر الشيخ يرحب بكم";
+            
+            // إنشاء كائن النطق
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // ضبط اللغة للعربية
+            utterance.lang = 'ar-SA';
+            
+            // محاولة اختيار صوت نسائي (يعتمد على الأصوات المتاحة في جهاز المستخدم)
+            const voices = window.speechSynthesis.getVoices();
+            
+            // البحث عن صوت نسائي متاح في النظام
+            const femaleVoice = voices.find(voice => 
+                (voice.name.includes('Female') || voice.name.includes('Google') || voice.name.includes('Arabic')) 
+                && voice.lang.includes('ar')
+            );
+
+            if (femaleVoice) {
+                utterance.voice = femaleVoice;
+            }
+
+            // ضبط حدة الصوت لتكون أنعم (قريبة لصوت البنت)
+            utterance.pitch = 1.2; // درجة حدة مرتفعة قليلاً
+            utterance.rate = 0.9;  // سرعة الكلام (هادئة)
+
+            // تنفيذ النطق
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // تحميل الأصوات في المتصفح (ضروري لبعض المتصفحات مثل Chrome)
+        window.speechSynthesis.onvoiceschanged = () => {
+            window.speechSynthesis.getVoices();
+        };
+    </script>
+
+</body>
+</html>

@@ -383,7 +383,44 @@ Twitter
         </marquee>
 
 </footer>
+<script>
+  
+</script>
+<script>
+  // الدالة التي ستقوم بالنطق
+  function speakWelcome() {
+    const text = " المعهد العالي للإدارة وتكنولوجيا المعلومات بكفر الشيخ يرحب بكم";
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    utterance.lang = 'ar-SA';
+    
+    // محاولة اختيار صوت نسائي
+    const voices = window.speechSynthesis.getVoices();
+    const femaleVoice = voices.find(voice => 
+      (voice.name.includes('Female') || voice.name.includes('Arabic') || voice.name.includes('Hoda')) 
+      && voice.lang.includes('ar')
+    );
 
+    if (femaleVoice) {
+      utterance.voice = femaleVoice;
+    }
+
+    utterance.pitch = 1.2; // لجعل الصوت "بناتي" أكثر
+    utterance.rate = 0.7;  // سرعة هادئة
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // تشغيل الصوت بعد تحميل الصفحة بـ ثانيتين
+  window.addEventListener('load', () => {
+    setTimeout(speakWelcome, 500);
+  });
+
+  // تأكيد تحميل الأصوات للمتصفحات (زي كروم)
+  window.speechSynthesis.onvoiceschanged = () => {
+    window.speechSynthesis.getVoices();
+  };
+</script>
 <script src="/js/all.min.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="/js/main.js"></script>

@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>تسجيل الدخول</title>
   <link rel="stylesheet" href="/css/regiser.css">
+  <style>
+    /* تنسيق إضافي بسيط للتأكد من ظهور زر الزائر بشكل جيد */
+    .vistore a {
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #eee;
+      border-radius: 5px;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -12,28 +24,66 @@
 
     <form id="loginForm">
       <label>البريد الإلكتروني:</label>
-    
       <input type="text" id="email" placeholder="ادخل البريد الإلكتروني" required>
+      
       <label> كلمة المرور:</label>
-<div class="password-container">
-  <input type="password" id="password" placeholder="كلمة المرور" required min="8" max="15">
-  <span id="togglePassword" class="toggle-icon">
-    
-   🙈
-  </span>
-</div>
+      <div class="password-container">
+        <input type="password" id="password" placeholder="كلمة المرور" required min="8" max="15">
+        <span id="togglePassword" class="toggle-icon">🙈</span>
+      </div>
 
       <button type="submit">تسجيل الدخول</button>
     </form>
 
     <p>ليس لديك حساب؟ <a href="register.html">إنشاء حساب جديد</a></p>
   </div>
+
   <div class="vistore">
-   <a href="/home.html" 
-   >  التصفح كزائر  </a>
-   
+    <a href="javascript:void(0)" onclick="welcomeAndRedirect()">التصفح كزائر</a>
   </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="/js/regiser.js"></script>
+
+  <script>
+    function welcomeAndRedirect() {
+      // النص المطلوب
+      const text = "مرحباً بكم في المعهد العالي للإدارة وتكنولوجيا المعلومات بكفر الشيخ يرحب بكم";
+      const utterance = new SpeechSynthesisUtterance(text);
+      
+      utterance.lang = 'ar-SA';
+      
+      // اختيار الصوت
+      const voices = window.speechSynthesis.getVoices();
+      const femaleVoice = voices.find(voice => 
+        (voice.name.includes('Female') || voice.name.includes('Google') || voice.name.includes('Arabic')) 
+        && voice.lang.includes('ar')
+      );
+
+      if (femaleVoice) {
+        utterance.voice = femaleVoice;
+      }
+
+      utterance.pitch = 1.2; 
+      utterance.rate = 0.9;
+
+      // الانتقال للصفحة بعد انتهاء الصوت
+      utterance.onend = function() {
+        window.location.href = "/home.html";
+      };
+
+      // التأخير لمدة ثانيتين قبل بدء الكلام
+      setTimeout(() => {
+        window.speechSynthesis.speak(utterance);
+      }, 2000); // 2000 مللي ثانية = ثانيتين
+
+      // احتياطياً لو الصوت مأشتغلش لأي سبب، هينتقل بعد 6 ثواني (2 تأخير + 4 وقت الجملة)
+      setTimeout(() => {
+        if (!window.speechSynthesis.speaking) {
+           window.location.href = "/home.html";
+        }
+      }, 100); 
+    }
+  </script>
 </body>
 </html>
