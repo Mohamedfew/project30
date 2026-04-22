@@ -117,11 +117,11 @@
  
           <div class="main">
             <p>
-             أنشئ المعهد العالى للهندسة والتكنولوجيا بكفرالشيخ طبقاً لقرار وزير التعليم العالى رقم (931) لعام 2006 والصادر بتاريخ 17/6/2006 والذي رخص ببدء الدراسة بالمعهد اعتباراً من العام الجامعي 2006/2007 بمدينة كفر الشيخ.
+             أنشئ المعهد العالى للإدارة والتكنولوجيا بكفرالشيخ طبقاً لقرار وزير التعليم العالى رقم (931) لعام 2006 والصادر بتاريخ 17/6/2006 والذي رخص ببدء الدراسة بالمعهد اعتباراً من العام الجامعي 2006/2007 بمدينة كفر الشيخ.
  
-                  - يتبع المعهد العالى للهندسة والتكنولوجيا جمعية النيل للعلوم والتكنولوجيا بكفرالشيخ والمشهرة تحت رقم 496 لسنة 2000 وله شخصية اعتبارية واستقلال مالي وإداري عن الجمعية. وتصرف موارده المالية في الأغراض العلمية والتعليمية والبحثية بما يسهم في تحقيق الأهداف التي قام من أجلها المعهد.
+                  - يتبع المعهد العالى للإدارة والتكنولوجيا جمعية النيل للعلوم والتكنولوجيا بكفرالشيخ والمشهرة تحت رقم 496 لسنة 2000 وله شخصية اعتبارية واستقلال مالي وإداري عن الجمعية. وتصرف موارده المالية في الأغراض العلمية والتعليمية والبحثية بما يسهم في تحقيق الأهداف التي قام من أجلها المعهد.
 
-                  - يعمل المعهد العالى للهندسة والتكنولوجيا بكفر الشيخ وفقاً لأحكام القانون 52 لسنة 1970 الصادر بتنظيم المعاهد العليا الخاصة ولائحته التنفيذية الصادرة بالقرار الوزاري رقم1088 لسنة 1987
+                  - يعمل المعهد العالى للإدارة والتكنولوجيا بكفر الشيخ وفقاً لأحكام القانون 52 لسنة 1970 الصادر بتنظيم المعاهد العليا الخاصة ولائحته التنفيذية الصادرة بالقرار الوزاري رقم1088 لسنة 1987
                     </p>
                     </div>
 
@@ -151,7 +151,7 @@
 
                 <div class="dean-footer">
                     <h4 class="dean-name">أ.د/ رضا ابراهيم صالح</h4>
-                    <p class="dean-role">عميد المعهد العالي للهندسة والتكنولوجيا</p>
+                    <p class="dean-role">عميد المعهد العالي للإدارة والتكنولوجيا</p>
                 </div>
             </div>
 
@@ -202,13 +202,6 @@
 <div class="container">
 <div class="cards">
 
-<div class="cardd reveal">
-<a href="/eng.html">
-<img src="/img//هندسة0.webp" alt="">
-</a>
-<a href="/eng.html">هندسة</a>
-<p>قسم هندسة يهتم بتصميم وتطوير الأنظمة الهندسية والتقنيات الحديثة</p>
-</div>
 
 <div class="cardd reveal">
 <a href="/acount.html">
@@ -339,7 +332,6 @@ Twitter
       <div class="col">
         <h3>الأقسام</h3>
         <ul>
-          <li><a href="eng.html"> قسم هندسة </a></li>
           <li><a href="acount.html">الإدارة والمحاسبة</a></li>
           <li><a href="miss.html">نظم المعلومات الإدارية</a></li>
           <li><a href="scince.html">علوم الحاسب</a></li>
@@ -383,44 +375,7 @@ Twitter
         </marquee>
 
 </footer>
-<script>
-  
-</script>
-<script>
-  // الدالة التي ستقوم بالنطق
-  function speakWelcome() {
-    const text = " المعهد العالي للإدارة وتكنولوجيا المعلومات بكفر الشيخ يرحب بكم";
-    const utterance = new SpeechSynthesisUtterance(text);
-    
-    utterance.lang = 'ar-SA';
-    
-    // محاولة اختيار صوت نسائي
-    const voices = window.speechSynthesis.getVoices();
-    const femaleVoice = voices.find(voice => 
-      (voice.name.includes('Female') || voice.name.includes('Arabic') || voice.name.includes('Hoda')) 
-      && voice.lang.includes('ar')
-    );
 
-    if (femaleVoice) {
-      utterance.voice = femaleVoice;
-    }
-
-    utterance.pitch = 1.2; // لجعل الصوت "بناتي" أكثر
-    utterance.rate = 0.7;  // سرعة هادئة
-
-    window.speechSynthesis.speak(utterance);
-  }
-
-  // تشغيل الصوت بعد تحميل الصفحة بـ ثانيتين
-  window.addEventListener('load', () => {
-    setTimeout(speakWelcome, 500);
-  });
-
-  // تأكيد تحميل الأصوات للمتصفحات (زي كروم)
-  window.speechSynthesis.onvoiceschanged = () => {
-    window.speechSynthesis.getVoices();
-  };
-</script>
 <script src="/js/all.min.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="/js/main.js"></script>
