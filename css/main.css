@@ -496,7 +496,7 @@ body {
 .footer {
    background: #0f172a;
   color: #fff;
- height: 440px;
+ height: fit-content;
   font-family: "Cairo", sans-serif;
   padding: 20px;
 }

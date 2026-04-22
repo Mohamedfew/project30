@@ -89,7 +89,7 @@ if (loginForm) {
         confirmButtonText: 'متابعة'
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = "home.html";
+          window.location.href = "/homesign.html";
         }
       });
     } else {
