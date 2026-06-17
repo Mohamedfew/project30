@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المساعد الذكي - معهد الإدارة وتكنولوجيا المعلومات</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --primary-blue: #0047AB;
+            --dark-header: #121212;
+            --text-main: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* حاوية الشات */
+        #ai-widget-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 10000;
+        }
+
+        /* زر الفتح بأنيميشن */
+        #chat-btn {
+            width: 65px; height: 65px; border-radius: 50%;
+            background: var(--primary-blue); color: white;
+            border: none; cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 71, 171, 0.3);
+            font-size: 26px; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; justify-content: center;
+        }
+        #chat-btn:hover { transform: scale(1.1) rotate(5deg); }
+
+        /* نافذة الشات الزجاجية */
+        #chat-window {
+            width: 400px; height: 620px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            position: absolute; bottom: 85px; right: 0;
+            display: flex; flex-direction: column;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform-origin: bottom right;
+        }
+
+        .chat-hidden { transform: scale(0); opacity: 0; pointer-events: none; }
+
+        /* الهيدر */
+        .chat-header {
+            background: var(--dark-header); color: white;
+            padding: 20px; display: flex; justify-content: space-between; align-items: center;
+        }
+        .header-content { display: flex; align-items: center; gap: 12px; }
+        .header-content i { font-size: 22px; color: var(--primary-blue); }
+
+        /* جسم المحادثة */
+        .chat-body {
+            flex: 1; padding: 20px; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 12px;
+            scroll-behavior: smooth;
+        }
+
+        /* رسائل البوت بأنيميشن */
+        .msg {
+            max-width: 85%; padding: 14px 18px; border-radius: 18px;
+            font-size: 14.5px; line-height: 1.6;
+            animation: slideIn 0.4s ease forwards;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bot-msg { background: white; color: var(--text-main); align-self: flex-start; border-bottom-right-radius: 4px; }
+
+        /* الروابط */
+        .bot-link {
+            display: inline-block; margin-top: 8px;
+            color: var(--primary-blue); font-weight: bold; text-decoration: none;
+            border-bottom: 2px solid var(--primary-blue); padding-bottom: 2px;
+        }
+
+        /* أزرار الأسئلة */
+        .questions-grid {
+            display: flex; flex-direction: column; gap: 10px; margin-top: 15px;
+        }
+
+        .q-btn {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--primary-blue);
+            color: var(--primary-blue);
+            padding: 12px 16px; border-radius: 12px;
+            cursor: pointer; font-size: 13.5px; text-align: right;
+            transition: 0.3s;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .q-btn:hover {
+            background: var(--primary-blue); color: white;
+            transform: translateX(-5px);
+        }
+
+        /* سكرول بار */
+        .chat-body::-webkit-scrollbar { width: 5px; }
+        .chat-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div id="ai-widget-container">
+    <button id="chat-btn"><i class="fas fa-comment-alt"></i></button>
+
+    <div id="chat-window" class="chat-hidden">
+        <div class="chat-header">
+            <div class="header-content">
+                <i class="fas fa-user-shield"></i>
+                <div>
+                    <h4 style="margin:0; font-size:16px;">المساعد الذكي للمعهد</h4>
+                    <small style="opacity:0.7">مرحباً بك يا محمد</small>
+                </div>
+            </div>
+            <button id="close-btn" style="background:none; border:none; color:white; font-size:20px; cursor:pointer;">&times;</button>
+        </div>
+
+        <div class="chat-body" id="chat-box">
+            <div class="msg bot-msg">
+                أهلاً بك في نظام إدارة المعهد العالي للإدارة وتكنولوجيا المعلومات بكفر الشيخ. اختار استفسارك من الأسفل:
+            </div>
+            <div id="q-list" class="questions-grid"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const kb = [
+        { id: 1, q: "ما هي الأقسام العلمية بالمعهد؟", a: "يضم المعهد أقسام تكنولوجيا المعلومات، الإدارة، والمحاسبة. تفاصيل الأقسام هنا:", link: "URL_DEPARTMENTS" },
+        { id: 2, q: "كيف يمكنني التقديم للمعهد؟", a: "التقديم متاح عبر مكتب التنسيق أو التقديم المباشر في مقر المعهد بكفر الشيخ. الشروط هنا:", link: "URL_ADMISSION" },
+        { id: 3, q: "أين أجد جداول المحاضرات؟", a: "الجداول الدراسية لكل الفرق متاحة الآن بصيغة PDF. حمل جدولك من هنا:", link: "URL_TIMETABLE" },
+        { id: 4, q: "رابط استخراج نتائج الطلاب؟", a: "يمكنك الاستعلام عن نتيجتك فور صدورها برقمك الأكاديمي عبر البوابة:", link: "URL_RESULTS" },
+        { id: 5, q: "كيفية دفع المصروفات الدراسية؟", a: "الدفع متاح عبر فوري كود (12345) أو خزينة المعهد. التفاصيل هنا:", link: "URL_FEES" },
+        // الـ 5 أسئلة الجديدة
+        { id: 6, q: "ما هي الكورسات التدريبية المتاحة؟", a: "يوفر مركز التكنولوجيا كورسات في البرمجة والجرافيك معتمدة. سجل من هنا:", link: "URL_COURSES" },
+        { id: 7, q: "كيفية استخراج كارنيه المعهد؟", a: "يتم استخراج الكارنيه من شؤون الطلاب بعد دفع المصروفات وتقديم الصور الشخصية. المواعيد هنا:", link: "URL_ID" },
+        { id: 8, q: "هل توجد مكتبة إلكترونية؟", a: "نعم، يوفر المعهد وصول مجاني للمكتبة الرقمية وبنك المعرفة المصري للطلاب. ادخل هنا:", link: "URL_LIBRARY" },
+        { id: 9, q: "ما هي الأنشطة الطلابية المتاحة؟", a: "يمكنك الانضمام لفريق الجوالة، المسرح، أو النشاط الرياضي عبر رعاية الشباب. التفاصيل:", link: "URL_ACTIVITIES" },
+        { id: 10, q: "كيف أتواصل مع الدعم الفني للموقع؟", a: "إذا واجهت مشكلة في حسابك، يمكنك إرسال تذكرة دعم لوحدة الـ IT من هنا:", link: "URL_SUPPORT" }
+    ];
+
+    const chatBtn = document.getElementById('chat-btn');
+    const chatWin = document.getElementById('chat-window');
+    const closeBtn = document.getElementById('close-chat-btn');
+    const chatBox = document.getElementById('chat-box');
+    const qList = document.getElementById('q-list');
+
+    let activeIds = kb.map(i => i.id);
+
+    chatBtn.onclick = () => chatWin.classList.toggle('chat-hidden');
+    document.getElementById('close-btn').onclick = () => chatWin.classList.add('chat-hidden');
+
+    function renderQs() {
+        qList.innerHTML = '';
+        const available = kb.filter(i => activeIds.includes(i.id));
+        
+        available.forEach(item => {
+            const b = document.createElement('button');
+            b.className = 'q-btn';
+            b.textContent = item.q;
+            b.onclick = () => handleSelect(item.id);
+            qList.appendChild(b);
+        });
+    }
+
+    function handleSelect(id) {
+        const item = kb.find(i => i.id === id);
+        activeIds = activeIds.filter(i => i !== id); // حذف السؤال المختار
+
+        // إضافة الإجابة
+        const reply = document.createElement('div');
+        reply.className = 'msg bot-msg';
+        reply.innerHTML = `${item.a} <br> <a href="${item.link}" target="_blank" class="bot-link">اضغط هنا للانتقال</a>`;
+        chatBox.appendChild(reply);
+        
+        // التمرير للأسفل
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // رسالة المساعدة الإضافية
+        setTimeout(() => {
+            const helper = document.createElement('div');
+            helper.className = 'msg bot-msg';
+            helper.textContent = activeIds.length > 0 ? "هل أساعدك في شيء آخر؟ إليك الأسئلة المتبقية:" : "سعدت بمساعدتك! إذا كان لديك استفسار آخر يمكنك زيارة المعهد.";
+            chatBox.appendChild(helper);
+            
+            renderQs(); // تحديث الأزرار (السؤال المختار اختفى)
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 1000);
+    }
+
+    renderQs();
+</script>
+
+</body>
+</html>

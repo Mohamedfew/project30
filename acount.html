@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل الأكاديمي الشامل | قسم الإدارة والمحاسبة - الإصدار العملاق</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-navy: #0f172a;
+            --accent-gold: #ffcc00;
+            --deep-blue: #1e293b;
+            --light-bg: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.95);
+            --transition: all 0.5s ease;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #ffffff;
+            color: var(--primary-navy);
+            overflow-x: hidden;
+            line-height: 1.9;
+        }
+
+        /* --- زر الرجوع الجانبي --- */
+        .side-nav-container {
+            position: fixed;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 9999;
+        }
+        .btn-home-floating {
+            background: var(--primary-navy);
+            color: var(--accent-gold);
+            width: 75px;
+            height: 75px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transition: var(--transition);
+        }
+        .btn-home-floating:hover {
+            width: 140px;
+            background: var(--accent-gold);
+            color: var(--primary-navy);
+            transform: scale(1.05);
+        }
+        .btn-home-floating i { font-size: 1.8rem; }
+        .btn-home-floating span { font-weight: 900; font-size: 0.8rem; display: none; margin-top: 5px; }
+        .btn-home-floating:hover span { display: block; }
+
+        /* --- الأقسام الملحمية --- */
+        .hero-giant {
+            height: 100vh;
+            background: linear-gradient(rgba(15,23,42,0.85), rgba(15,23,42,0.7)), 
+                        url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            color: white;
+            position: relative;
+        }
+        
+        .hero-title { font-family: 'Cairo', sans-serif; font-size: 5.5rem; font-weight: 900; }
+        
+        .section-box { padding: 120px 0; border-bottom: 1px solid #eee; }
+        .bg-navy-dark { background: var(--primary-navy); color: white; }
+
+        /* --- بطاقات المحتوى (Cards) --- */
+        .pro-card {
+            background: white;
+            border-radius: 30px;
+            padding: 45px;
+            height: 100%;
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        .pro-card:hover { transform: translateY(-20px); box-shadow: 0 30px 60px rgba(0,0,0,0.1); border-color: var(--accent-gold); }
+        .pro-card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: var(--accent-gold);
+        }
+
+        /* --- الجداول الممتدة --- */
+        .table-mega {
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+        .table-mega thead { background: var(--primary-navy); color: var(--accent-gold); }
+        .table-mega td { padding: 20px; vertical-align: middle; }
+
+        /* --- العدادات --- */
+        .counter-strip { background: var(--accent-gold); color: var(--primary-navy); padding: 60px 0; }
+        .counter-val { font-size: 4rem; font-weight: 900; }
+
+        /* --- معرض الصور الموسع --- */
+        .gallery-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .gallery-box { height: 350px; border-radius: 20px; overflow: hidden; position: relative; }
+        .gallery-box img { width: 100%; height: 100%; object-fit: cover; transition: 1s; }
+        .gallery-box:hover img { transform: scale(1.1) rotate(2deg); }
+        .gallery-overlay {
+            position: absolute; bottom: 0; width: 100%; padding: 30px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            color: white; transform: translateY(100%); transition: 0.5s;
+        }
+        .gallery-box:hover .gallery-overlay { transform: translateY(0); }
+
+        /* --- الأنميشن المخصص --- */
+        .reveal-text { position: relative; overflow: hidden; }
+        .reveal-text::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--accent-gold); transform: translateX(-100%);
+            animation: slideReveal 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        @keyframes slideReveal { 0% { transform: translateX(-100%); } 50% { transform: translateX(0); } 100% { transform: translateX(100%); } }
+
+        /* تخصيص السكرول */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: var(--light-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-navy); border-radius: 10px; border: 3px solid var(--light-bg); }
+
+    </style>
+</head>
+<body>
+
+    <div class="side-nav-container">
+        <a href="/home.html" class="btn-home-floating animate__animated animate__bounceInRight">
+            <i class="fas fa-home"></i>
+            <span>الرجوع للرئيسية</span>
+        </a>
+    </div>
+
+    <section class="hero-giant">
+        <div class="container">
+            <div class="row" >
+                <div class="col-xl-9" data-aos="fade-up">
+                    <h5 class="text-warning fw-bold text-uppercase mb-3">مرحباً بك في المستقبل الإداري</h5>
+                    <h1 class="hero-title animate__animated animate__fadeInLeft">قسم الإدارة <span class="text-warning">والمحاسبة</span></h1>
+                    <p class="fs-4 mt-4 opacity-75">نحن هنا لنصقل مهاراتك القيادية والتحليلية، ونحول شغفك بالأرقام إلى مسيرة مهنية عالمية في عالم المال والأعمال.</p>
+                    <div class="d-flex gap-3 mt-5">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="counter-strip shadow-lg">
+        <div class="container">
+            <div class="row text-center gy-4">
+                <div class="col-md-3" data-aos="zoom-in">
+                    <div class="counter-val">2500+</div>
+                    <div class="fw-bold fs-5">طالب حالي</div>
+                </div>
+                <div class="col-md-3" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="counter-val">15+</div>
+                    <div class="fw-bold fs-5">شراكة دولية</div>
+                </div>
+                <div class="col-md-3" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="counter-val">100%</div>
+                    <div class="fw-bold fs-5">اعتماد أكاديمي</div>
+                </div>
+                <div class="col-md-3" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="counter-val">40+</div>
+                    <div class="fw-bold fs-5">عضو هيئة تدريس</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-box">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6" data-aos="fade-left">
+                    <h2 class="display-5 fw-bold mb-4">عن القسم ورسالته <span class="text-warning">التنموية</span></h2>
+                    <p class="text-secondary">تأسس قسم الإدارة والمحاسبة ليكون النواة الحقيقية لتخريج كوادر قادرة على مواجهة تحديات الاقتصاد العالمي. إن رؤيتنا تتجاوز مجرد تدريس الكتب الأكاديمية؛ نحن نركز على بناء شخصية الطالب القيادية.</p>
+                    
+                    <div class="mt-4 pro-card bg-light border-0 shadow-sm">
+                        <h5><i class="fas fa-eye text-warning me-2"></i> رؤية القسم 2030</h5>
+                        <p class="small">أن يصبح القسم هو المرجع الأول للتميز المحاسبي والإداري في المنطقة، من خلال دمج التكنولوجيا الحديثة مثل الذكاء الاصطناعي في تحليل البيانات المالية.</p>
+                    </div>
+
+                    <div class="mt-3 pro-card bg-light border-0 shadow-sm">
+                        <h5><i class="fas fa-bullseye text-danger me-2"></i> رسالتنا</h5>
+                        <p class="small">إعداد خريج منافس محلياً وإقليمياً، مزود بالمعارف والمهارات التقنية والقيم الأخلاقية التي تمكنه من المساهمة في تنمية المجتمع.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="row g-3">
+                        <div class="col-12"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=800" class="img-fluid rounded-5 shadow" alt="Img1"></div>
+                        <div class="col-6"><img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=400" class="img-fluid rounded-5 shadow" alt="Img2"></div>
+                        <div class="col-6"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=400" class="img-fluid rounded-5 shadow" alt="Img3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-box bg-navy-dark">
+        <div class="container text-center mb-5">
+            <h2 class="display-5 fw-bold mb-3" data-aos="fade-down">محاور الدراسة والتخصص</h2>
+            <p class="opacity-75">نغطي كافة الجوانب التي تجعل منك خبيراً اقتصادياً شاملاً</p>
+        </div>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-xl-3 col-md-6" data-aos="flip-right">
+                    <div class="pro-card text-dark">
+                        <div class="fs-1 mb-3 text-warning"><i class="fas fa-landmark"></i></div>
+                        <h4>المحاسبة الحكومية</h4>
+                        <p class="small">دراسة موازنات الدولة وكيفية الرقابة على الأموال العامة وإدارة المؤسسات غير الهادفة للربح.</p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6" data-aos="flip-right" data-aos-delay="100">
+                    <div class="pro-card text-dark">
+                        <div class="fs-1 mb-3 text-warning"><i class="fas fa-hand-holding-usd"></i></div>
+                        <h4>محاسبة الزكاة</h4>
+                        <p class="small">تخصص فريد يربط بين الفقه الإسلامي المالي والمعايير المحاسبية الحديثة لتوزيع الثروات.</p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6" data-aos="flip-right" data-aos-delay="200">
+                    <div class="pro-card text-dark">
+                        <div class="fs-1 mb-3 text-warning"><i class="fas fa-brain"></i></div>
+                        <h4>السلوك التنظيمي</h4>
+                        <p class="small">فهم سيكولوجية العمل وكيفية تحفيز الموظفين وإدارة الصراعات داخل بيئة العمل.</p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6" data-aos="flip-right" data-aos-delay="300">
+                    <div class="pro-card text-dark">
+                        <div class="fs-1 mb-3 text-warning"><i class="fas fa-chart-line"></i></div>
+                        <h4>الأسواق المالية</h4>
+                        <p class="small">تحليل البورصات، تداول الأوراق المالية، وفهم تقلبات العملات الرقمية والمحلية.</p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6" data-aos="flip-right">
+                    <div class="pro-card text-dark">
+                        <div class="fs-1 mb-3 text-warning"><i class="fas fa-file-invoice-dollar"></i></div>
+                        <h4>المراجعة الداخلية</h4>
+                        <p class="small">التدريب على اكتشاف الأخطاء المالية ومنع الاحتيال وضمان جودة التقارير.</p>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6" data-aos="flip-right" data-aos-delay="100">
+                    <div class="pro-card text-dark">
+                        <div class="fs-1 mb-3 text-warning"><i class="fas fa-users-cog"></i></div>
+                        <h4>إدارة العمليات</h4>
+                        <p class="small">تحسين سلاسل الإمداد وتقليل التكاليف وزيادة الإنتاجية في المصانع والشركات.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-box">
+        <div class="container">
+            <h2 class="display-6 fw-bold mb-5 text-center" data-aos="fade-up">توزيع المقررات الدراسية (4 سنوات)</h2>
+            
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-up">
+                    <h4 class="border-bottom border-warning pb-2 mb-3">السنة الأولى: التأسيس</h4>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between"><span>مبادئ المحاسبة (1)</span> <span class="badge bg-navy-dark">3 ساعات</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>أصول الإدارة</span> <span class="badge bg-navy-dark">3 ساعات</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>رياضيات الاستثمار</span> <span class="badge bg-navy-dark">2 ساعة</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>اللغة الإنجليزية للأعمال</span> <span class="badge bg-navy-dark">3 ساعات</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>مبادئ الاقتصاد الجزئي</span> <span class="badge bg-navy-dark">3 ساعات</span></li>
+                    </ul>
+                </div>
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <h4 class="border-bottom border-warning pb-2 mb-3">السنة الثانية: التخصص</h4>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between"><span>محاسبة الشركات</span> <span class="badge bg-navy-dark">4 ساعات</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>إدارة التسويق</span> <span class="badge bg-navy-dark">3 ساعات</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>محاسبة قومية</span> <span class="badge bg-navy-dark">3 ساعات</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>التشريعات الضريبية</span> <span class="badge bg-navy-dark">2 ساعة</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>الإحصاء الوصفي</span> <span class="badge bg-navy-dark">3 ساعات</span></li>
+                    </ul>
+                </div>
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                    <h4 class="border-bottom border-warning pb-2 mb-3">السنة الثالثة: الاحتراف</h4>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between"><span>محاسبة تكاليف متقدمة</span> <span class="badge bg-navy-dark">3 ساعات</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>إدارة الإنتاج</span> <span class="badge bg-navy-dark">3 ساعات</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>التحليل المالي</span> <span class="badge bg-navy-dark">4 ساعات</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>منهجية البحث العلمي</span> <span class="badge bg-navy-dark">2 ساعة</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>المحاسبة الإدارية</span> <span class="badge bg-navy-dark">3 ساعات</span></li>
+                    </ul>
+                </div>
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
+                    <h4 class="border-bottom border-warning pb-2 mb-3">السنة الرابعة: التخرج</h4>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between"><span>المراجعة والتدقيق</span> <span class="badge bg-navy-dark">4 ساعات</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>الإدارة الاستراتيجية</span> <span class="badge bg-navy-dark">3 ساعات</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>نظم المحاسبة الإلكترونية</span> <span class="badge bg-navy-dark">3 ساعات</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>بحوث العمليات</span> <span class="badge bg-navy-dark">3 ساعات</span></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>مشروع التخرج التطبيقي</span> <span class="badge bg-warning text-dark">6 ساعات</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-box bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5" data-aos="fade-left">
+                    <h2 class="fw-bold mb-4">ماذا ستجيد عند تخرجك؟</h2>
+                    <p>نحن نركز على المهارات العملية التي يطلبها سوق العمل اليوم في مصر والخليج.</p>
+                    
+                    <div class="skill-item mb-4">
+                        <div class="d-flex justify-content-between"><span>إتقان برنامج Excel المحاسبي</span> <span>98%</span></div>
+                        <div class="progress mt-2"><div class="progress-bar w-100 animate-progress"></div></div>
+                    </div>
+                    <div class="skill-item mb-4">
+                        <div class="d-flex justify-content-between"><span>التحليل المالي للشركات</span> <span>90%</span></div>
+                        <div class="progress mt-2"><div class="progress-bar" style="width: 90%;"></div></div>
+                    </div>
+                    <div class="skill-item mb-4">
+                        <div class="d-flex justify-content-between"><span>اللغة الإنجليزية للأعمال</span> <span>85%</span></div>
+                        <div class="progress mt-2"><div class="progress-bar" style="width: 85%;"></div></div>
+                    </div>
+                </div>
+                <div class="col-lg-7" data-aos="fade-right">
+                    <div class="p-5 bg-white rounded-5 shadow-lg">
+                        <h4><i class="fas fa-briefcase text-warning me-2"></i> المستقبل الوظيفي</h4>
+                        <hr>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="p-3 border rounded">مدير مالي (CFO)</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 border rounded">محاسب قانوني</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 border rounded">مدير موارد بشرية</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 border rounded">محلل بيانات مالية</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-box">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="zoom-in">
+                <h2 class="display-6 fw-bold">حياة القسم في صور</h2>
+                <div class="bg-warning mx-auto" style="height: 5px; width: 80px; border-radius: 5px;"></div>
+            </div>
+            <div class="gallery-container">
+                <div class="gallery-box" data-aos="zoom-up">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800">
+                    <div class="gallery-overlay"><h5>قاعات المحاضرات الحديثة</h5></div>
+                </div>
+                <div class="gallery-box" data-aos="zoom-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=800">
+                    <div class="gallery-overlay"><h5>معامل الحاسب المجهزة</h5></div>
+                </div>
+                <div class="gallery-box" data-aos="zoom-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800">
+                    <div class="gallery-overlay"><h5>فرق العمل الطلابية</h5></div>
+                </div>
+                <div class="gallery-box" data-aos="zoom-up" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80&w=800">
+                    <div class="gallery-overlay"><h5>ندوات وورش عمل</h5></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-box bg-navy-dark">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-down">إجابات عن تساؤلاتكم</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordionMain">
+                        <div class="accordion-item bg-transparent text-white border-secondary mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button bg-transparent text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#f1">
+                                    هل يمكنني الجمع بين تخصصي الإدارة والمحاسبة؟
+                                </button>
+                            </h2>
+                            <div id="f1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordionMain">
+                                <div class="accordion-body opacity-75">
+                                    نعم، البرنامج مصمم بشكل يمنحك شهادة متكاملة في "العلوم التجارية - تخصص إدارة ومحاسبة"، مما يجعلك ملماً بكافة جوانب المنظومة المالية والإدارية.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item bg-transparent text-white border-secondary mb-3">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-transparent text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#f2">
+                                    ما هي شروط القيد في نقابة التجاريين؟
+                                </button>
+                            </h2>
+                            <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faqAccordionMain">
+                                <div class="accordion-body opacity-75">
+                                    فور تخرجك وحصولك على الشهادة المعتمدة، يمكنك التوجه إلى أقرب فرع للنقابة لتقديم أوراقك والحصول على كارنيه "تجاري حر" والاستمتاع بكافة المزايا.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-box text-center py-5">
+        <div class="container py-5" data-aos="zoom-out">
+            <h2 class="display-5 fw-bold mb-4">هل لديك أي استفسار آخر؟</h2>
+            <p class="lead mb-5 px-lg-5">فريق شؤون الطلاب متاح للرد على كافة أسئلتكم على مدار الساعة عبر الواتساب أو البريد الإلكتروني.</p>
+            <div class="d-flex justify-content-center gap-4 flex-wrap">
+                <div class="p-4 shadow-sm border rounded-5 bg-white" style="min-width: 200px;">
+                    <i class="fab fa-whatsapp fa-3x text-success mb-3"></i>
+                    <h5>واتساب</h5>
+                    <p class="small text-muted">01234567890</p>
+                </div>
+                <div class="p-4 shadow-sm border rounded-5 bg-white" style="min-width: 200px;">
+                    <i class="fas fa-map-marker-alt fa-3x text-danger mb-3"></i>
+                    <h5>الموقع</h5>
+                    <p class="small text-muted">مبنى القسم - الدور الثاني</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="bg-navy-dark py-4 text-center">
+        <small class="opacity-50">جميع الحقوق محفوظة © 2026 - قسم الإدارة والمحاسبة | المعهد العالي للإدارة</small>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1200, once: true });
+        
+        // تفاعل زر الرجوع عند السكرول
+        window.addEventListener('scroll', function() {
+            const btn = document.querySelector('.btn-home-floating');
+            if (window.scrollY > 300) {
+                btn.style.opacity = "1";
+            } else {
+                btn.style.opacity = "0.7";
+            }
+        });
+    </script>
+</body>
+</html>
