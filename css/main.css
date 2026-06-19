@@ -496,7 +496,7 @@ body {
 .footer {
    background: #0f172a;
   color: #fff;
- height: fit-content;
+ height: fit-content !important;
   font-family: "Cairo", sans-serif;
   padding: 20px;
 }
@@ -1602,7 +1602,7 @@ animation: left-to-right 3s;
     position: fixed;
     top: 30%;
     z-index: 999;
-    left: -72% !important;
+    left: -79% !important;
     width: 100%;
 }
 
