@@ -105,7 +105,7 @@ if (loginForm) {
         confirmButtonText: 'متابعة'
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = "/homesign.html"; // التوجيه لصفحة المستخدمين العادية
+          window.location.href = "/doctor.html"; // التوجيه لصفحة المستخدمين العادية
         }
       });
       return; // التوقف هنا

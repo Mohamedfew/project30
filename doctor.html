@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم الدكتور | النظام الإداري المتكامل</title>
+    <title>لوحة تحكم الدكتور المتكاملة</title>
     <style>
         * {
             margin: 0;
@@ -22,11 +22,10 @@
         /* القائمة الجانبية - Sidebar */
         .sidebar {
             width: 260px;
-            background-color: #1e283d; /* اللون الكحلي الداكن من صورتك */
+            background-color: #001f3f;
             color: #fff;
             display: flex;
             flex-direction: column;
-            transition: all 0.3s ease;
         }
 
         .sidebar-header {
@@ -41,7 +40,7 @@
         .sidebar-menu {
             list-style: none;
             padding: 15px 0;
-            flex-style: 1;
+            flex: 1;
             overflow-y: auto;
         }
 
@@ -53,10 +52,10 @@
             text-decoration: none;
             font-size: 15px;
             border-right: 4px solid transparent;
+            cursor: pointer;
             transition: all 0.2s;
         }
 
-        /* تأثير التحديد الأصفر عند الوقوف أو التنشيط مثل صورتك */
         .sidebar-menu li a:hover, .sidebar-menu li.active a {
             color: #fff;
             background-color: rgba(255, 255, 255, 0.05);
@@ -95,16 +94,18 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            text-decoration: none;
             font-size: 14px;
         }
+          .btn-logout a{
+            text-decoration: none;
+            color:white;
+          }
 
         /* محتوى لوحة التحكم */
         .container {
             padding: 30px;
         }
 
-        /* الفلاتر العلوية (اختيار المادة والترم) */
         .filter-section {
             background-color: #fff;
             padding: 20px;
@@ -127,7 +128,7 @@
             color: #666;
         }
 
-        .filter-group select {
+        .filter-group select, .filter-group input {
             padding: 8px 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -135,12 +136,20 @@
             outline: none;
         }
 
-        /* الجداول واستمارات رصد الدرجات */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active-tab {
+            display: block;
+        }
+
         .data-card {
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             padding: 20px;
+            margin-bottom: 20px;
         }
 
         .card-header {
@@ -158,7 +167,6 @@
             font-weight: 600;
         }
 
-        /* تنسيق جدول الطلاب والرصد نفس الصورة */
         .custom-table {
             width: 100%;
             border-collapse: collapse;
@@ -177,17 +185,20 @@
             font-weight: 600;
         }
 
-        .grade-input {
-            width: 80px;
+        .grade-input, .text-input {
+            width: 100%;
+            max-width: 120px;
             padding: 6px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            text-align: center;
+            outline: none;
         }
 
-        /* الأزرار المتوافقة مع التصميم */
+        .text-input { max-width: 100%; }
+
+        /* الأزرار */
         .btn-action {
-            padding: 6px 12px;
+            padding: 8px 16px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -195,47 +206,81 @@
             transition: 0.2s;
         }
 
-        .btn-save {
-            background-color: #1e283d;
-            color: white;
+        .btn-save { background-color: #001f3f; color: white; }
+        .btn-save:hover { background-color: #2a3752; }
+        .btn-delete { background-color: #dc3545; color: white; }
+        .btn-add { background-color: #28a745; color: white; }
+
+        /* النوافذ المنبثقة (Modals) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
 
-        .btn-save:hover {
-            background-color: #2a3752;
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            width: 500px;
+            max-width: 90%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        .btn-delete {
-            background-color: #dc3545;
-            color: white;
+        .modal-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #001f3f;
         }
 
-        .btn-delete:hover {
-            background-color: #c82333;
+        .modal-body .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .modal-body label { font-size: 14px; color: #555; }
+        .modal-body input, .modal-body select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <div class="sidebar-header">
-            لوحة تحكم الدكتور
-        </div>
+        <div class="sidebar-header">لوحة تحكم الدكتور</div>
         <ul class="sidebar-menu">
-            <li><a href="#">الرئيسية</a></li>
-            <li><a href="#">مقرراتي الدراسية</a></li>
-            <li class="active"><a href="#">رصد النتائج والدرجات</a></li>
-            <li><a href="#">إدارة الاختبارات والامتحانات</a></li>
-            <li><a href="#">الغياب والحضور</a></li>
-            <li><a href="#">المشاريع والتكليفات</a></li>
-            <li><a href="#">صندوق الرسائل والاتصال</a></li>
-            <li><a href="#">التقارير الإحصائية</a></li>
+            <li class="menu-item active" onclick="switchTab('dashboard', 'الرئيسية')"><a>الرئيسية</a></li>
+            <li class="menu-item" onclick="switchTab('courses', 'مقرراتي الدراسية')"><a>مقرراتي الدراسية</a></li>
+            <li class="menu-item" onclick="switchTab('results', 'رصد النتائج والدرجات')"><a>رصد النتائج والدرجات</a></li>
+            <li class="menu-item" onclick="switchTab('exams', 'إدارة الاختبارات والامتحانات')"><a>إدارة الاختبارات والامتحانات</a></li>
+            <li class="menu-item" onclick="switchTab('attendance', 'الغياب والحضور')"><a>الغياب والحضور</a></li>
         </ul>
     </div>
 
     <div class="main-content">
         <div class="topbar">
-            <div class="page-title">لوحة التحكم الإدارية / رصد النتائج</div>
-            <button class="btn-logout">الخروج للصفحة الرئيسية</button>
+            <div class="page-title" id="page-title">لوحة التحكم الإدارية / الرئيسية</div>
+            <button class="btn-logout"><a href="/index.html">الخروج للصفحة الرئيسية</a>
+            </button>
         </div>
 
         <div class="container">
@@ -243,8 +288,10 @@
                 <div class="filter-group">
                     <label>اختر الفرقة الدراسية</label>
                     <select>
-                        <option>الفرقة الرابعة</option>
+                        <option>الفرقة الأولى</option>
+                        <option>الفرقة الثانية</option>
                         <option>الفرقة الثالثة</option>
+                        <option>الفرقة الرابعة</option>
                     </select>
                 </div>
                 <div class="filter-group">
@@ -254,60 +301,261 @@
                         <option>تطوير تطبيقات الويب</option>
                     </select>
                 </div>
-                <div class="filter-group">
-                    <label>نوع الاختبار</label>
-                    <select>
-                        <option>أعمال السنة / الميدترم</option>
-                        <option>الامتحان النهائي</option>
-                    </select>
+            </div>
+
+            <div id="dashboard" class="tab-content active-tab">
+                <div class="data-card">
+                    <div class="card-title" style="margin-bottom: 15px;">مرحباً بك يا دكتور في البوابة الأكاديمية</div>
+                    <p style="color: #666; font-size: 15px;">استخدم القائمة الجانبية للتنقل بحرية، وإدخال المحاضرات بملفات PDF، وإضافة أسئلة الاختبارات التفاعلية ورصد الحضور.</p>
                 </div>
             </div>
 
-            <div class="data-card">
-                <div class="card-header">
-                    <div class="card-title">قائمة الطلاب المقيّدين بالمقرر</div>
-                    <button class="btn-action btn-save">حفظ الكل</button>
+            <div id="courses" class="tab-content">
+                <div class="data-card">
+                    <div class="card-header">
+                        <div class="card-title">إضافة ورفع المحاضرات والمقررات الدراسية</div>
+                    </div>
+                    <div class="filter-section" style="box-shadow: none; padding: 0; margin-bottom: 20px;">
+                        <div class="filter-group">
+                            <label>اسم المحاضرة</label>
+                            <input type="text" id="lecture-title" placeholder="مثال: المحاضرة الثانية">
+                        </div>
+                        <div class="filter-group">
+                            <label>اختر ملف المحاضرة (PDF)</label>
+                            <input type="file" id="lecture-file" accept=".pdf">
+                        </div>
+                        <button class="btn-action btn-add" style="margin-top: 20px;" onclick="addLecture()">رفع المحاضرة الآن</button>
+                    </div>
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>عنوان المحاضرة</th>
+                                <th>نوع الملف</th>
+                                <th>تاريخ الرفع</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lecture-table-body">
+                            <tr>
+                                <td>المحاضرة الأولى: مقدمة في النظم والبيانات</td>
+                                <td><strong style="color: #dc3545;">PDF</strong></td>
+                                <td>15-06-2026</td>
+                                <td><button class="btn-action btn-delete" onclick="this.parentElement.parentElement.remove()">حذف</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                
-                <table class="custom-table">
-                    <thead>
-                        <tr>
-                            <th>الطالب</th>
-                            <th>الدرجة (من 100)</th>
-                            <th>إجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>محمد عزت</td>
-                            <td><input type="number" class="grade-input" value="90"></td>
-                            <td><button class="btn-action btn-delete">حذف</button></td>
-                        </tr>
-                        <tr>
-                            <td>أحمد إبراهيم</td>
-                            <td><input type="number" class="grade-input" value="95"></td>
-                            <td><button class="btn-action btn-delete">حذف</button></td>
-                        </tr>
-                        <tr>
-                            <td>سارة محمود</td>
-                            <td><input type="number" class="grade-input" value="88"></td>
-                            <td><button class="btn-action btn-delete">حذف</button></td>
-                        </tr>
-                        <tr>
-                            <td>ياسين علي</td>
-                            <td><input type="number" class="grade-input" value="76"></td>
-                            <td><button class="btn-action btn-delete">حذف</button></td>
-                        </tr>
-                        <tr>
-                            <td>ليلى يوسف</td>
-                            <td><input type="number" class="grade-input" value="92"></td>
-                            <td><button class="btn-action btn-delete">حذف</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+            </div>
+
+            <div id="results" class="tab-content">
+                <div class="data-card">
+                    <div class="card-header">
+                        <div class="card-title">قائمة الطلاب المقيّدين برصد الدرجات (20 طالب)</div>
+                        <button class="btn-action btn-save" onclick="alert('تم حفظ جميع درجات الطلاب بنجاح!')">حفظ الدرجات</button>
+                    </div>
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>اسم الطالب</th>
+                                <th>درجة أعمال السنة (من 40)</th>
+                                <th>درجة الفاينال (من 60)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="students-grades-body">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="exams" class="tab-content">
+                <div class="data-card">
+                    <div class="card-header">
+                        <div class="card-title">بنك الأسئلة وإعداد الامتحانات التفاعلية</div>
+                        <button class="btn-action btn-add" onclick="openExamModal()">إضافة سؤال جديد +</button>
+                    </div>
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>نص السؤال</th>
+                                <th>نوع السؤال</th>
+                                <th>خيارات / الإجابة المتوقعة</th>
+                                <th>الدرجة</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="exams-table-body">
+                            <tr>
+                                <td>هل تعتبر لغة الـ HTML لغة برمجة معالجة؟</td>
+                                <td>صح / خطأ</td>
+                                <td>خطأ</td>
+                                <td>2</td>
+                                <td><button class="btn-action btn-delete" onclick="this.parentElement.parentElement.remove()">حذف</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="attendance" class="tab-content">
+                <div class="data-card">
+                    <div class="card-header">
+                        <div class="card-title">رصد غياب وحضور الطلاب لليوم الحالي (20 طالب)</div>
+                        <button class="btn-action btn-save" onclick="alert('تم تسجيل حضور وغياب الطلاب اليوم!')">حفظ وإرسال للحسابات</button>
+                    </div>
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>اسم الطالب</th>
+                                <th>حالة الحضور</th>
+                                <th>ملاحظات الدكتور</th>
+                            </tr>
+                        </thead>
+                        <tbody id="students-attendance-body">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal" id="examModal">
+        <div class="modal-content">
+            <div class="modal-header">إضافة سؤال جديد للامتحان الحالي</div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>اكتب نص السؤال</label>
+                    <input type="text" id="question-text" placeholder="مثال: اختر الإجابة الصحيحة مما يلي...">
+                </div>
+                <div class="form-group">
+                    <label>نوع السؤال</label>
+                    <select id="question-type" onchange="toggleQuestionOptions()">
+                        <option value="MCQ">اختيار من متعدد (MCQ)</option>
+                        <option value="TrueFalse">صح أو خطأ</option>
+                        <option value="Text">سؤال مقالي</option>
+                    </select>
+                </div>
+                <div class="form-group" id="mcq-options-div">
+                    <label>الخيارات المتاحة (افصل بينها بفاصلة)</label>
+                    <input type="text" id="question-options" placeholder="أ, ب, ج, د">
+                </div>
+                <div class="form-group">
+                    <label>درجة السؤال</label>
+                    <input type="number" id="question-grade" value="2">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-action btn-save" onclick="addQuestionToTable()">إضافة للامتحان</button>
+                <button class="btn-action btn-delete" onclick="closeExamModal()">إلغاء</button>
             </div>
         </div>
     </div>
 
+    <script>
+        // مصفوفة تحتوي على 20 اسماً حقيقياً لتعبئة الصفحات
+        const studentNames = [
+            "محمد عزت", "أحمد إبراهيم", "سارة محمود", "ياسين علي", "ليلى يوسف",
+            "محمود عبد الرحمن", "منى السيد", "كريم حسن", "فاطمة أحمد", "مصطفى خالد",
+            "رنا فريد", "طارق زياد", "ندى عصام", "عمر شريف", "إيمان مجدي",
+            "هاني شاكر", "يسرا أمين", "حسام بدير", "ميادة عبد الله", "بلال سعيد"
+        ];
+
+        // تعبئة البيانات تلقائياً عند تحميل الصفحة
+        window.onload = function() {
+            const gradesBody = document.getElementById('students-grades-body');
+            const attendanceBody = document.getElementById('students-attendance-body');
+
+            studentNames.forEach((name, index) => {
+                // 1. تعبئة جدول الدرجات
+                gradesBody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${name}</strong></td>
+                        <td><input type="number" class="grade-input" value="${Math.floor(Math.random() * 10) + 30}"></td>
+                        <td><input type="number" class="grade-input" value="${Math.floor(Math.random() * 15) + 45}"></td>
+                    </tr>
+                `;
+
+                // 2. تعبئة جدول الغياب
+                attendanceBody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${name}</strong></td>
+                        <td>
+                            <label><input type="radio" name="student_att_${index}" checked> حاضر</label>
+                            <label style="margin-right:15px;"><input type="radio" name="student_att_${index}"> غائب</label>
+                        </td>
+                        <td><input type="text" class="text-input" placeholder="اكتب ملاحظة إن وجدت..."></td>
+                    </tr>
+                `;
+            });
+        };
+
+        // الانتقال بين الصفحات
+        function switchTab(tabId, titleText) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active-tab'));
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active-tab');
+            event.currentTarget.classList.add('active');
+            document.getElementById('page-title').innerText = "لوحة التحكم الإدارية / " + titleText;
+        }
+
+        // إجرائيات رفع المحاضرات
+        function addLecture() {
+            const title = document.getElementById('lecture-title').value;
+            const file = document.getElementById('lecture-file').value;
+            if(!title || !file) { alert('برجاء كتابة العنوان واختيار ملف PDF أولاً!'); return; }
+            
+            const today = new Date().toLocaleDateString('en-GB');
+            const tbody = document.getElementById('lecture-table-body');
+            tbody.innerHTML += `
+                <tr>
+                    <td>${title}</td>
+                    <td><strong style="color: #dc3545;">PDF</strong></td>
+                    <td>${today}</td>
+                    <td><button class="btn-action btn-delete" onclick="this.parentElement.parentElement.remove()">حذف</button></td>
+                </tr>
+            `;
+            document.getElementById('lecture-title').value = '';
+            document.getElementById('lecture-file').value = '';
+        }
+
+        // فتح وإغلاق النافذة المنبثقة للامتحانات
+        function openExamModal() { document.getElementById('examModal').style.display = 'flex'; }
+         Cinderella = function closeExamModal() { document.getElementById('examModal').style.display = 'none'; }
+
+        function toggleQuestionOptions() {
+            const type = document.getElementById('question-type').value;
+            const optionsDiv = document.getElementById('mcq-options-div');
+            optionsDiv.style.display = (type === 'MCQ') ? 'flex' : 'none';
+        }
+
+        // إضافة السؤال لجدول الامتحانات تفاعلياً
+        function addQuestionToTable() {
+            const qText = document.getElementById('question-text').value;
+            const qType = document.getElementById('question-type').value;
+            let qOptions = document.getElementById('question-options').value;
+            const qGrade = document.getElementById('question-grade').value;
+
+            if(!qText) { alert('برجاء كتابة نص السؤال!'); return; }
+            if(qType !== 'MCQ') { qOptions = "حسب الإدخال"; }
+
+            const tbody = document.getElementById('exams-table-body');
+            tbody.innerHTML += `
+                <tr>
+                    <td>${qText}</td>
+                    <td>${qType === 'MCQ' ? 'اختيار من متعدد' : qType === 'TrueFalse' ? 'صح / خطأ' : 'سؤال مقالي'}</td>
+                    <td>${qOptions}</td>
+                    <td>${qGrade}</td>
+                    <td><button class="btn-action btn-delete" onclick="this.parentElement.parentElement.remove()">حذف</button></td>
+                </tr>
+            `;
+            closeExamModal();
+            document.getElementById('question-text').value = '';
+            document.getElementById('question-options').value = '';
+        }
+    </script>
 </body>
 </html>
