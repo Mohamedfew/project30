@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الدكتور | النظام الإداري المتكامل</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* القائمة الجانبية - Sidebar */
+        .sidebar {
+            width: 260px;
+            background-color: #1e283d; /* اللون الكحلي الداكن من صورتك */
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: #1a2234;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 15px 0;
+            flex-style: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #bdc6d8;
+            text-decoration: none;
+            font-size: 15px;
+            border-right: 4px solid transparent;
+            transition: all 0.2s;
+        }
+
+        /* تأثير التحديد الأصفر عند الوقوف أو التنشيط مثل صورتك */
+        .sidebar-menu li a:hover, .sidebar-menu li.active a {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-right-color: #ffc107; 
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* الشريط العلوي */
+        .topbar {
+            background-color: #fff;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .topbar .page-title {
+            font-size: 18px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        /* محتوى لوحة التحكم */
+        .container {
+            padding: 30px;
+        }
+
+        /* الفلاتر العلوية (اختيار المادة والترم) */
+        .filter-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            margin-bottom: 25px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .filter-group label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .filter-group select {
+            padding: 8px 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            min-width: 200px;
+            outline: none;
+        }
+
+        /* الجداول واستمارات رصد الدرجات */
+        .data-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            padding: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-title {
+            font-size: 16px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* تنسيق جدول الطلاب والرصد نفس الصورة */
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+        }
+
+        .custom-table th, .custom-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 15px;
+        }
+
+        .custom-table th {
+            background-color: #f8f9fa;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .grade-input {
+            width: 80px;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* الأزرار المتوافقة مع التصميم */
+        .btn-action {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .btn-save {
+            background-color: #1e283d;
+            color: white;
+        }
+
+        .btn-save:hover {
+            background-color: #2a3752;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            لوحة تحكم الدكتور
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#">الرئيسية</a></li>
+            <li><a href="#">مقرراتي الدراسية</a></li>
+            <li class="active"><a href="#">رصد النتائج والدرجات</a></li>
+            <li><a href="#">إدارة الاختبارات والامتحانات</a></li>
+            <li><a href="#">الغياب والحضور</a></li>
+            <li><a href="#">المشاريع والتكليفات</a></li>
+            <li><a href="#">صندوق الرسائل والاتصال</a></li>
+            <li><a href="#">التقارير الإحصائية</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="topbar">
+            <div class="page-title">لوحة التحكم الإدارية / رصد النتائج</div>
+            <button class="btn-logout">الخروج للصفحة الرئيسية</button>
+        </div>
+
+        <div class="container">
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label>اختر الفرقة الدراسية</label>
+                    <select>
+                        <option>الفرقة الرابعة</option>
+                        <option>الفرقة الثالثة</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>اختر المقرر الدراسي</label>
+                    <select>
+                        <option>نظم المعلومات الإدارية</option>
+                        <option>تطوير تطبيقات الويب</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>نوع الاختبار</label>
+                    <select>
+                        <option>أعمال السنة / الميدترم</option>
+                        <option>الامتحان النهائي</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="data-card">
+                <div class="card-header">
+                    <div class="card-title">قائمة الطلاب المقيّدين بالمقرر</div>
+                    <button class="btn-action btn-save">حفظ الكل</button>
+                </div>
+                
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>الطالب</th>
+                            <th>الدرجة (من 100)</th>
+                            <th>إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>محمد عزت</td>
+                            <td><input type="number" class="grade-input" value="90"></td>
+                            <td><button class="btn-action btn-delete">حذف</button></td>
+                        </tr>
+                        <tr>
+                            <td>أحمد إبراهيم</td>
+                            <td><input type="number" class="grade-input" value="95"></td>
+                            <td><button class="btn-action btn-delete">حذف</button></td>
+                        </tr>
+                        <tr>
+                            <td>سارة محمود</td>
+                            <td><input type="number" class="grade-input" value="88"></td>
+                            <td><button class="btn-action btn-delete">حذف</button></td>
+                        </tr>
+                        <tr>
+                            <td>ياسين علي</td>
+                            <td><input type="number" class="grade-input" value="76"></td>
+                            <td><button class="btn-action btn-delete">حذف</button></td>
+                        </tr>
+                        <tr>
+                            <td>ليلى يوسف</td>
+                            <td><input type="number" class="grade-input" value="92"></td>
+                            <td><button class="btn-action btn-delete">حذف</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

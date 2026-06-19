@@ -92,6 +92,24 @@ if (loginForm) {
       return; // التوقف هنا
     }
     
+    // --- 2. فحص حساب الدكتور الخاص (mohamed123@gmail.com / 123) ---
+    if (emailOrUsername === "doctor123@gmail.com" && password === "123") {
+      // حفظ بياناته في الـ Local Storage لتتعرف عليه الصفحات الأخرى كمستخدم مسجل
+      let specialUser = { name: "الدكتور محمد", email: "doctor123@gmail.com" };
+      localStorage.setItem("currentUser", JSON.stringify(specialUser));
+
+      Swal.fire({
+        title: 'مرحباً بك من جديد يا دكتور 👋',
+        text: 'تم تسجيل الدخول بنجاح ✅',
+        icon: 'success',
+        confirmButtonText: 'متابعة'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "/homesign.html"; // التوجيه لصفحة المستخدمين العادية
+        }
+      });
+      return; // التوقف هنا
+    }
 
     // --- 3. فحص باقي المستخدمين العاديين من الـ Local Storage ---
     let users = JSON.parse(localStorage.getItem("users")) || [];
